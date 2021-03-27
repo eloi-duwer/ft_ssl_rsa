@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 00:07:21 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 03:33:37 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/27 03:59:29 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static uint64_t	add_mod(uint64_t a, uint64_t b, uint64_t mod)
 static uint64_t	mult_mod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	uint64_t res;
-	uint64_t test;
 
 	res = 0;
 	while (b > 0)

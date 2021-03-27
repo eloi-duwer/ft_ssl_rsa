@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 03:34:02 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/27 03:55:31 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ int			hash_arg_parsing(int ac, char **av);
 int			base64_arg_parsing(int ac, char **av);
 int			des_args_parsing(int ac, char **av);
 bool		is_prime(const uint64_t nb, uint64_t iter);
-uint64_t	get_rand(void);
+void		get_rand(void *buff, size_t size);
+uint64_t	get_64b_rand(void);
+uint64_t	get_rand_size(size_t size);
+uint64_t	gen_prime(size_t size);
 uint64_t	pow_mod(uint64_t a, uint64_t b, uint64_t mod);
+uint64_t	lcm(uint64_t a, uint64_t b);
+uint64_t	gcd(uint64_t a, uint64_t b);
+uint64_t	gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v);
+void		key_gen(void);
 
 #endif

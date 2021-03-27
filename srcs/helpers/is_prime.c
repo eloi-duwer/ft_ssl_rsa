@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 02:43:25 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 03:47:05 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:49:31 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	miller_rabin(uint64_t nb, uint64_t d)
 	uint64_t	x;
 	uint64_t	i;
 
-	rand = (get_rand() % (nb - 4)) + 2;
+	rand = (get_64b_rand() % (nb - 4)) + 2;
 	x = pow_mod(rand, d, nb);
 	if (x == 1 || x == nb - 1)
 		return (true);

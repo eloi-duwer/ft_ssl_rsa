@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 04:35:24 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/27 00:00:07 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ in hexadecimal format\n");
 	return (1);
 }
 
-#include <stdio.h>
-
 int			main(int argc, char **argv)
 {
-	if (argc == 1)
+	key_gen();
+	/*if (argc == 1)
 		return (print_commands(NULL));
 	if (ft_strcmp(argv[1], "md5") == 0
 		|| ft_strcmp(argv[1], "sha256") == 0
@@ -84,5 +83,5 @@ int			main(int argc, char **argv)
 	else if (ft_strncmp(argv[1], "des", 3) == 0)
 		return (des_args_parsing(argc, argv));
 	else
-		return (print_commands(argv[1]));
+		return (print_commands(argv[1]));*/
 }

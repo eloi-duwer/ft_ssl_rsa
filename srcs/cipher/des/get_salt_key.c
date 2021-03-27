@@ -6,29 +6,13 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/18 15:13:32 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:49:03 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_des.h>
 #include <ft_ssl.h>
 #include <termios.h>
-
-static uint64_t get_random()
-{
-	int			fd;
-	int			ret;
-	uint64_t	rng;
-
-	fd = open("/dev/random", O_RDONLY);
-	if (fd < 0)
-		exit(print_errno("open"));
-	ret = read(fd, &rng, 8);
-	if (ret < 0)
-		exit(print_errno("read"));
-	close(fd);
-	return rng;
-}
 
 /*
 **	If decoding, salt is in the header of the file, or in argument,
@@ -56,7 +40,7 @@ void	get_salt(t_des_args *ctx)
 and option --no_salt is set"));
 	}
 	else if (ctx->has_salt == false)
-		ctx->salt = get_random();
+		ctx->salt = get_64b_rand();
 	ctx->has_salt = true;
 }
 
