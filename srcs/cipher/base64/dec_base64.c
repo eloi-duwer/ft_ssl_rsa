@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:06 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 17:24:10 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/09 14:15:35 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static inline void	get_next_chars(char **str, const char *end_str, char *buff)
 		ft_memset(&buff[i], '=', 4 - i);
 }
 
-char				*dec_base64(char *str, size_t size, size_t *ret_size)
+void				*dec_base64(char *str, size_t size, size_t *ret_size)
 {
 	size_t		actual_size;
 	char		buff[4];

@@ -6,13 +6,13 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:12 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 00:57:06 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/09 14:13:46 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_base64.h>
 
-void	b64_finish_padding(char *str, size_t padding, char *ret)
+void	b64_finish_padding(void *str, size_t padding, char *ret)
 {
 	char buff[4];
 
@@ -34,7 +34,7 @@ void	b64_finish_padding(char *str, size_t padding, char *ret)
 ** 	if there is padding, 4 characters will be appended
 */
 
-char	*enc_base64(char *str, size_t size, size_t *ret_size)
+char	*enc_base64(void *str, size_t size, size_t *ret_size)
 {
 	size_t	nb_groups;
 	size_t	padding;

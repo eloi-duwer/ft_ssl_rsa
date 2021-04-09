@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 00:07:21 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/27 03:59:29 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/02 01:10:47 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ uint64_t		pow_mod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	uint64_t res;
 
+	//ft_printf("pow(%lu, %lu, %lu) = ", a, b, mod);
+
 	res = 1;
 	a = a % mod;
 	if (a == 0)
@@ -51,5 +53,6 @@ uint64_t		pow_mod(uint64_t a, uint64_t b, uint64_t mod)
 		b = b >> 1;
 		a = mult_mod(a, a, mod);
 	}
+	//ft_printf("%lu\n", res);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:28 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 01:50:29 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/09 14:14:52 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct	s_base64_args {
 	int				fd;
 }				t_base64_args;
 
-char			*enc_base64(char *str, size_t size, size_t *ret_size);
-char			*dec_base64(char *str, size_t size, size_t *ret_size);
+char			*enc_base64(void *str, size_t size, size_t *ret_size);
+void			*dec_base64(char *str, size_t size, size_t *ret_size);
 char			get_enc_char_1(char *str);
 char			get_enc_char_2(char *str);
 char			get_enc_char_3(char *str);

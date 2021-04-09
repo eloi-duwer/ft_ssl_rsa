@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/03/26 23:53:28 by eduwer           ###   ########.fr        #
+#    Updated: 2021/04/02 02:15:47 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRC_NAME = main.c \
 	cipher/des/des_alg.c \
 	cipher/des/read/bufferization.c \
 	cipher/des/read/des_read.c \
-	rsa/genrsa.c
+	rsa/genrsa.c \
+	rsa/asn/asn1_enc.c
 
 NAME = ft_ssl
 
