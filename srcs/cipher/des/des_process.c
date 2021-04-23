@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/12 15:02:33 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/18 19:12:11 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		conv_strs(t_des_args *ctx)
 		return (print_errno("Can't open input file: "));
 	ctx->fd_out = 1;
 	if (ctx->filename_out != NULL && (ctx->fd_out = \
-		open(ctx->filename_out, O_RDWR | O_CREAT | O_TRUNC, 0777)) == -1)
+		open(ctx->filename_out, O_RDWR | O_CREAT | O_TRUNC, 0600)) == -1)
 		return (print_errno("Can't open output file: "));
 	return (0);
 }

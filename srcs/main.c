@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/09 14:53:31 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 17:06:39 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			print_commands(char *name)
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", name);
 	else
 		ft_printf("Usage: ./ft_ssl <command>\n\n");
-	ft_printf("Standart commands:\n\n");
+	ft_printf("Standart commands:genrsa\nrsa\nrsault\n\n");
 	ft_printf("Message Digest commands:\nmd5\nsha256\nsha384\nsha512\n\n");
 	ft_printf("Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb\n");
 	return (1);
@@ -50,28 +50,30 @@ int			print_des_usage(void)
 {
 	ft_printf("Usage: ft_ssl [des des-ecb des-cbc] [options]\n\n\
 Options:\
-\n  -a\t\tThe input / output is base64 encoded\
-\n  -d\t\tUse decrypt mode\
-\n  -e\t\tUse encrypt mode (default)\
-\n  -h\t\tPrint this help and exit\
-\n  --print_keys\tPrint the salt / key / iv to stderr\
-\n  --no_salt\tOn encryption: do not output the salt to the file, \
-\n\t\tOn decryption: do not expect salt at the beginning of the file \
+\n  -a\t\t\tThe input / output is base64 encoded\
+\n  -d\t\t\tUse decrypt mode\
+\n  --default_keygen\tUse default Openssl Key Derivation Function\
+\n  -e\t\t\tUse encrypt mode (default)\
+\n  -h\t\t\tPrint this help and exit\
+\n  --print_keys\t\tPrint the salt / key / iv to stderr\
+\n  --no_salt\t\tOn encryption: do not output the salt to the file, \
+\n\t\t\tOn decryption: do not expect salt at the beginning of the file \
 (the salt must be provided if the key is not provided)\
-\n  -i <file>\tInput file\
-\n  -o <file>\tOutput file\
-\n  -p <password>\tPassword to use\
-\n  -k <key>\tEncryption key, in hexadecimal format\
-\n  -s <salt>\tSalt used for key derivation, in hexadecimal format\
-\n  -v <iv>\tInitialisation vector, used for all des modes except ecb, \
+\n  -i <file>\t\tInput file\
+\n  -o <file>\t\tOutput file\
+\n  -p <password>\t\tPassword to use\
+\n  -k <key>\t\tEncryption key, in hexadecimal format\
+\n  -s <salt>\t\tSalt used for key derivation, in hexadecimal format\
+\n  -v <iv>\t\tInitialisation vector, used for all des modes except ecb, \
 in hexadecimal format\n");
 	return (1);
 }
 
+#include <ft_ssl_des.h>
+
 int			main(int argc, char **argv)
 {
-	key_gen();
-	/*if (argc == 1)
+	if (argc == 1)
 		return (print_commands(NULL));
 	if (ft_strcmp(argv[1], "md5") == 0
 		|| ft_strcmp(argv[1], "sha256") == 0
@@ -82,6 +84,8 @@ int			main(int argc, char **argv)
 		return (base64_arg_parsing(argc, argv));
 	else if (ft_strncmp(argv[1], "des", 3) == 0)
 		return (des_args_parsing(argc, argv));
+	else if (ft_strstr(argv[1], "rsa"))
+		return (rsa_args_parsing(argc, argv));
 	else
-		return (print_commands(argv[1]));*/
+		return (print_commands(argv[1]));
 }

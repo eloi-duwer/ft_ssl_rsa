@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/12 14:58:27 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 16:58:55 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int	des_parse_subargs(t_des_args *args)
 		args->base64 = true;
 	else if (ft_strcmp(args->av[args->av_i], "--no_salt") == 0)
 		args->no_salt = true;
+	else if (ft_strcmp(args->av[args->av_i], "--default_keygen") == 0)
+		args->use_default_keygen = true;
 	else if (ft_strcmp(args->av[args->av_i], "-i") == 0)
 	{
 		if (get_arg(args, &args->filename_in, "-i needs an input file") != 0)

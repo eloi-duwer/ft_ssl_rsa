@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 14:49:03 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 17:00:21 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	get_salt(t_des_args *ctx)
 and option --no_salt is set"));
 	}
 	else if (ctx->has_salt == false)
-		ctx->salt = get_64b_rand();
+		ctx->salt = get_64b_rand(NULL);
 	ctx->has_salt = true;
 }
 
@@ -76,7 +76,13 @@ void	get_key_iv(t_des_args *ctx)
 	int			i;
 
 	salt = reverse_bits_u64(ctx->salt);
-	if ((key_iv = pbkdf2_hmac_sha256(ctx->password, \
+	if (ctx->use_default_keygen)
+	{
+		if ((key_iv = openssl_kdf(ctx->password, \
+		(uint8_t *)&salt, 8, 16)) == NULL)
+			exit(print_errno("Can't generate key: "));
+	}
+	else if ((key_iv = pbkdf2_hmac_sha256(ctx->password, \
 		(uint8_t *)&salt, 8, 16)) == NULL)
 		exit(print_errno("Can't generate key: "));
 	ft_memset(ctx->password, 0, ft_strlen(ctx->password));

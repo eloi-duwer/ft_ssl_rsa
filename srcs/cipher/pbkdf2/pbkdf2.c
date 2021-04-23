@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:16:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/18 21:30:32 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 **	1 = return from hmac
 **	2 = global return, xored with the return of hmac each iterations
 */
-
-#include <stdio.h>
 
 static uint8_t	*calc_block(char *password, uint8_t *salt, \
 	size_t salt_len, uint32_t be_i)

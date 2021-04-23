@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/04/02 02:15:47 by eduwer           ###   ########.fr        #
+#    Updated: 2021/04/23 16:48:09 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ SRC_NAME = main.c \
 	helpers/print_helpers.c \
 	helpers/reverse_bits.c \
 	helpers/is_prime.c \
-	helpers/get_rand.c \
+	helpers/random_generator.c \
 	helpers/pow_mod.c \
 	helpers/gen_prime.c \
 	helpers/lcm_gcd.c \
 	hash/hash_parse_args.c \
 	hash/hash_process.c \
 	hash/md5/md5.c \
+	hash/md5/exposed_md5.c \
 	hash/md5/digest.c \
 	hash/md5/rounds.c \
 	hash/sha256/sha256.c \
@@ -37,6 +38,7 @@ SRC_NAME = main.c \
 	cipher/base64/get_dec_char.c \
 	cipher/pbkdf2/pbkdf2.c \
 	cipher/pbkdf2/hmac/hmac_sha256.c \
+	cipher/pbkdf2/openssl_default_key_derivation.c \
 	cipher/des/des_parse_args.c \
 	cipher/des/des_process.c \
 	cipher/des/get_salt_key.c \
@@ -46,7 +48,9 @@ SRC_NAME = main.c \
 	cipher/des/des_alg.c \
 	cipher/des/read/bufferization.c \
 	cipher/des/read/des_read.c \
-	rsa/genrsa.c \
+	rsa/rsa_parse_args.c \
+	rsa/genrsa/genrsa.c \
+	rsa/genrsa/parse_genrsa_args.c \
 	rsa/asn/asn1_enc.c
 
 NAME = ft_ssl

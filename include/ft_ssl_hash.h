@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/15 15:37:17 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 16:52:25 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,16 @@ typedef	struct	s_hash_args {
 extern uint32_t	(*g_bitwise_operation[4]) (uint32_t x, uint32_t y, uint32_t z);
 
 char			*calc_md5(char *str, size_t size);
+uint8_t			*raw_md5(uint8_t *str, size_t size);
 char			*calc_sha256(char *str, size_t size);
+uint8_t			*raw_sha256(uint8_t *str, size_t size);
 char			*calc_sha512(char *str, size_t size);
 char			*calc_sha384(char *str, size_t size);
 
 bool			sha256(t_sha256_ctx *ctx, char *str, size_t size);
-uint8_t			*raw_sha256(uint8_t *str, size_t size);
+bool			md5(t_md5_ctx *ctx, char *str, size_t size);
+char			*md5_print(uint32_t bufa, uint32_t bufb, uint32_t bufc,\
+					uint32_t bufd);
 void			process_stdin(t_hash_args *args, bool print_stdin);
 void			process_string(t_hash_args *args, int ac, char **av);
 void			process_file(t_hash_args *args, char *file_name);

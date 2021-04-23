@@ -6,11 +6,12 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:33:02 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/27 03:52:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/15 16:56:53 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
+#include <stdlib.h>
 
 uint64_t	gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v)
 {
@@ -25,8 +26,10 @@ uint64_t	gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v)
 		return (b);
 	}
 	ret = gcd_ext(b % a, a, &x, &y);
-	*u = y - (b / a) * x;
-	*v = x;
+	if (u != NULL)
+		*u = y - (b / a) * x;
+	if (v != NULL)
+		*v = x;
 	return (ret);
 }
 

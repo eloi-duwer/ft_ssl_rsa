@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/12 14:55:04 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 16:58:07 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_des_args {
 	bool		password_malloced;
 	bool		no_salt;
 	bool		print_keys;
+	bool		use_default_keygen;
 	char		*password;
 	char		*key_str;
 	char		*salt_str;
@@ -70,6 +71,8 @@ typedef struct	s_des_args {
 }				t_des_args;
 
 uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \
+					size_t salt_len, size_t dk_len_bytes);
+uint8_t			*openssl_kdf(char *password, uint8_t *salt, \
 					size_t salt_len, size_t dk_len);
 uint8_t			*hmac_sha256(char *password, uint8_t *msg, size_t msg_len);
 void			gen_subkeys(t_des_args *ctx);

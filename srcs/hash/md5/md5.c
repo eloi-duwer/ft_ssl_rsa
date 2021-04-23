@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:21:45 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/02 22:09:29 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 16:49:53 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,28 +93,27 @@ char		*md5_print(uint32_t bufa, uint32_t bufb, uint32_t bufc,\
 	return (res);
 }
 
-char		*calc_md5(char *str, size_t size)
+bool		md5(t_md5_ctx *ctx, char *str, size_t size)
 {
 	size_t		i;
-	t_md5_ctx	ctx;
 
-	if ((ctx.message = (unsigned char *)ft_memalloc(size)) == NULL)
-		return (NULL);
-	ctx.message = ft_memcpy(ctx.message, str, size);
-	ctx.original_size = size;
-	if (padding(&ctx) != 0)
-		return (NULL);
-	ctx.buffera = 0x67452301;
-	ctx.bufferb = 0xefcdab89;
-	ctx.bufferc = 0x98badcfe;
-	ctx.bufferd = 0x10325476;
-	ctx.buffers[0] = &ctx.buffera;
-	ctx.buffers[1] = &ctx.bufferb;
-	ctx.buffers[2] = &ctx.bufferc;
-	ctx.buffers[3] = &ctx.bufferd;
+	if ((ctx->message = (unsigned char *)ft_memalloc(size)) == NULL)
+		return (false);
+	ctx->message = ft_memcpy(ctx->message, str, size);
+	ctx->original_size = size;
+	if (padding(ctx) != 0)
+		return (false);
+	ctx->buffera = 0x67452301;
+	ctx->bufferb = 0xefcdab89;
+	ctx->bufferc = 0x98badcfe;
+	ctx->bufferd = 0x10325476;
+	ctx->buffers[0] = &ctx->buffera;
+	ctx->buffers[1] = &ctx->bufferb;
+	ctx->buffers[2] = &ctx->bufferc;
+	ctx->buffers[3] = &ctx->bufferd;
 	i = 0;
-	while (i < ctx.current_size / (16 * 4))
-		md5_loop(&ctx, i++);
-	free(ctx.message);
-	return (md5_print(ctx.buffera, ctx.bufferb, ctx.bufferc, ctx.bufferd));
+	while (i < ctx->current_size / (16 * 4))
+		md5_loop(ctx, i++);
+	free(ctx->message);
+	return (true);
 }

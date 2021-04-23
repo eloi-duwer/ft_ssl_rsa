@@ -6,19 +6,19 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 02:43:25 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/21 14:49:31 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/18 19:30:56 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-static bool	miller_rabin(uint64_t nb, uint64_t d)
+static bool	miller_rabin(uint64_t nb, uint64_t d, t_rand_gen *r)
 {
 	uint64_t	rand;
 	uint64_t	x;
 	uint64_t	i;
 
-	rand = (get_64b_rand() % (nb - 4)) + 2;
+	rand = (get_64b_rand(r) % (nb - 4)) + 2;
 	x = pow_mod(rand, d, nb);
 	if (x == 1 || x == nb - 1)
 		return (true);
@@ -36,7 +36,7 @@ static bool	miller_rabin(uint64_t nb, uint64_t d)
 	return (false);
 }
 
-bool		is_prime(const uint64_t nb, uint64_t iter)
+bool		is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r)
 {
 	uint64_t	d;
 
@@ -49,7 +49,7 @@ bool		is_prime(const uint64_t nb, uint64_t iter)
 		d = d >> 1;
 	while (iter > 0)
 	{
-		if (miller_rabin(nb, d) == 0)
+		if (miller_rabin(nb, d, r) == 0)
 			return (false);
 		iter--;
 	}
