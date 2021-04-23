@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:40:18 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/18 21:29:08 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 17:21:58 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ typedef struct	s_rsa_args {
 
 char			*asn1_enc_b64_key(t_rsa_key *key, size_t *ret_len);
 int				parse_genrsa_args(int ac, char **av);
+int				parse_rsa_args(int ac, char **av);
 int				print_genrsa_usage(void);
+int				print_rsa_usage(void);
 int				genrsa_process(t_genrsa_args *args);
+int				rsa_process(t_rsa_args *args);
 
 #endif

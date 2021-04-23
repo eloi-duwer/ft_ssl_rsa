@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 18:11:11 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/18 18:42:47 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 17:23:17 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	rsa_args_parsing(int ac, char **av)
 {
 	if (ft_strcmp(av[1], "genrsa") == 0)
 		return parse_genrsa_args(ac, av);
-	/*else if (ft_strcmp(av[1], "rsa") == 0)
-		return pasrse_rsa_args(ac, av);
-	else if (ft_strcmp(av[1], "rsault") == 0)
+	else if (ft_strcmp(av[1], "rsa") == 0)
+		return parse_rsa_args(ac, av);
+	/*else if (ft_strcmp(av[1], "rsault") == 0)
 		return (parse_rsault_args(ac, av));*/
 	return (print_commands(av[1]));
 }
