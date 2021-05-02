@@ -47,12 +47,14 @@ int			print_errno(char *str)
 	char	*errstr;
 
 	errstr = strerror(errno);
-	ft_fdprintf(2, "%s %s\n", str, errstr);
+	if (str != NULL && errstr != NULL)
+		ft_fdprintf(2, "%s %s\n", str, errstr);
 	return (1);
 }
 
 int			print_error(char *str)
 {
-	ft_fdprintf(2, "%s\n", str);
+	if (str != NULL)
+		ft_fdprintf(2, "%s\n", str);
 	return (1);
 }

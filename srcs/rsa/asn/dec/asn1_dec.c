@@ -41,6 +41,7 @@ static int		asn1_dec_pub_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa
 {
 	t_asn1_buff	buff;
 	char		*pts[2];
+	int			ret;
 
 	if (conf->type == PEM)
 	{
@@ -60,16 +61,66 @@ static int		asn1_dec_pub_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa
 		buff.curr_len = 0;
 		buff.buff_len = str_len;
 	}
-	return (asn1_pub_do_read_key(&buff, key));
+	ret = asn1_pub_do_read_key(&buff, key);
+	if (conf->type == PEM)
+		free(buff.buff);
+	return (ret);
+}
+
+static int		asn1_priv_do_read_key(t_asn1_buff *buff, t_rsa_key *key)
+{
+	uint64_t	tmp;
+	char		*err;
+
+	asn1_read_object(buff, '\x30');
+	if ((tmp = asn1_read_integer(buff)) != 0)
+	{
+		ft_asprintf(&err, "ASN.1: Unexpected version for RSA private key: expected 0, got %.02d\n", tmp);
+		print_error(err);
+		free(err);
+		return (1);
+	}
+	key->modulus = asn1_read_integer(buff);
+	key->publicExponent = asn1_read_integer(buff);
+	key->privateExponent = asn1_read_integer(buff);
+	key->prime1 = asn1_read_integer(buff);
+	key->prime2 = asn1_read_integer(buff);
+	key->exponent1 = asn1_read_integer(buff);
+	key->exponent2 = asn1_read_integer(buff);
+	key->coefficient = asn1_read_integer(buff);
+	if (buff->curr_len != buff->buff_len)
+		return (print_error("ASN.1: Extraneous data after the end of RSA private key"));
+	return (0);
 }
 
 static int		asn1_dec_priv_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa_key *key)
 {
-	(void)str;
-	(void)str_len;
-	(void)conf;
-	(void)key;
-	return (0);
+	t_asn1_buff	buff;
+	char		*pts[2];
+	int			ret;
+
+	if (conf->type == PEM)
+	{
+		pts[0] = ft_strnstr(str, private_header, str_len);
+		if (pts[0] == NULL)
+			return (print_error("ft_ssl: RSA PEM Private Header not found"));
+		pts[0] += ft_strlen(public_header);
+		pts[1] = ft_strnstr(pts[0], private_footer, str_len);
+		if (pts[1] == NULL)
+			return (print_error("ft_ssl: RSA PEM Private Footer not found"));
+		buff.buff = dec_base64(pts[0], pts[1] - pts[0], &buff.buff_len);
+		buff.curr_len = 0;
+	}
+	else
+	{
+		buff.buff = (uint8_t *)str;
+		buff.curr_len = 0;
+		buff.buff_len = str_len;
+	}
+	ret = asn1_priv_do_read_key(&buff, key);
+	if (conf->type == PEM)
+		free(buff.buff);
+	return (ret);
 }
 
 int				asn1_dec_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa_key *ret)

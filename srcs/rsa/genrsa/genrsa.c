@@ -20,7 +20,7 @@ static void	genrsa_enc_print_key(t_rsa_key *key, int fd_out)
 	size_t		b64_len;
 	size_t		i;
 
-	conf.type = DER;
+	conf.type = PEM;
 	conf.public = false;
 	conf.des = false;
 	b64 = asn1_enc_key(key, &conf, &b64_len);

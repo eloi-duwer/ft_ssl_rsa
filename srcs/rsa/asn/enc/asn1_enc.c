@@ -64,7 +64,6 @@ void	asn1_encode_public_key(t_rsa_key *key, t_asn1_buff *buff)
 char			*asn1_enc_key(t_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)
 {
 	t_asn1_buff	buff;
-	char		*b64;
 	char		*ret;
 
 	if (conf->public == true)
@@ -74,14 +73,14 @@ char			*asn1_enc_key(t_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)
 	if (conf->type == PEM)
 	{
 		if ((ret = enc_base64(buff.buff, buff.curr_len, ret_len)) == NULL)
-			exit(print_errno("ft_ssl: enc_base64"));
+			exit(print_errno("ft_ssl: encode base64"));
+		erase_buff(&buff);
 	}
 	else
 	{
-		ret = buff.buff;
-		ret_len = buff.curr_len;
+		ret = (char *)buff.buff;
+		*ret_len = buff.curr_len;
 	}
-	erase_buff(&buff);
 	return (ret);
 }
 
