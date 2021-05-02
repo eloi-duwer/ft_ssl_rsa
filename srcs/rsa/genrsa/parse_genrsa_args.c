@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 18:43:00 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/18 19:02:21 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/04/23 17:31:13 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
 #include <ft_ssl.h>
 
-static int	get_arg(t_ssl_args *a, char **pt, char *errstr)
+int			get_arg(t_ssl_args *a, char **pt, char *errstr)
 {
 	a->i++;
 	if (a->i >= a->ac)

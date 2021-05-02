@@ -6,16 +6,18 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:40:18 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 17:21:58 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/02 15:02:33 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_RSA_H
 # define FT_SSL_RSA_H
 
+# include <ft_ssl.h>
 # include <stdint.h>
 # include <stddef.h>
 # include <stdbool.h>
+# include <ft_ssl_asn1.h>
 
 //Names are taken from https://tools.ietf.org/html/rfc3447#appendix-A.1
 
@@ -30,28 +32,19 @@ typedef struct	s_rsa_key {
 	uint64_t	coefficient;
 }				t_rsa_key;
 
-typedef struct	s_buff {
-	uint8_t		*buff;
-	size_t		curr_len;
-	size_t		buff_len;
-}				t_buff;
-
 typedef struct 	s_genrsa_args {
 	char		*filename_rand;
 	char		*filename_out;
 	int			fd_out;
 }				t_genrsa_args;
 
-enum e_type {
-	PEM,
-	DER
-};
-
 typedef struct	s_rsa_args {
 	enum e_type	in_type;
 	enum e_type	out_type;
 	char		*filename_in;
+	int			fd_in;
 	char		*filename_out;
+	int			fd_out;
 	char		*passin;
 	char		*passout;
 	bool		des;
@@ -63,12 +56,12 @@ typedef struct	s_rsa_args {
 	bool		pubout;
 }				t_rsa_args;
 
-char			*asn1_enc_b64_key(t_rsa_key *key, size_t *ret_len);
 int				parse_genrsa_args(int ac, char **av);
 int				parse_rsa_args(int ac, char **av);
 int				print_genrsa_usage(void);
 int				print_rsa_usage(void);
 int				genrsa_process(t_genrsa_args *args);
 int				rsa_process(t_rsa_args *args);
+int				get_arg(t_ssl_args *a, char **pt, char *errstr);
 
 #endif
