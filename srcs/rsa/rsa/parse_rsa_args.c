@@ -41,7 +41,10 @@ static int	rsa_parse_subargs(t_rsa_args *args, t_ssl_args *a)
 	else if (ft_strcmp(a->av[a->i], "-check") == 0)
 		args->check = true;
 	else if (ft_strcmp(a->av[a->i], "-pubin") == 0)
+	{
 		args->pubin = true;
+		args->pubout = true;
+	}
 	else if (ft_strcmp(a->av[a->i], "-pubout") == 0)
 		args->pubout = true;
 	else if (ft_strcmp(a->av[a->i], "-in") == 0)
@@ -74,6 +77,8 @@ static int	rsa_parse_subargs(t_rsa_args *args, t_ssl_args *a)
 		if (rsa_parse_in_outform(a, &args->out_type) != 0)
 			return (1);
 	}
+	else
+		return (print_rsa_usage());
 	return (0);
 }
 

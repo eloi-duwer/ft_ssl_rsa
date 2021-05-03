@@ -14,11 +14,6 @@
 #include <ft_ssl_rsa.h>
 #include <ft_ssl_base64.h>
 
-static const char *private_header = "-----BEGIN RSA PRIVATE KEY-----\n";
-static const char *private_footer = "-----END RSA PRIVATE KEY-----\n";
-static const char *public_header = "-----BEGIN PUBLIC KEY-----\n";
-static const char *public_footer = "-----END PUBLIC KEY-----\n";
-
 static int		asn1_pub_do_read_key(t_asn1_buff *buff, t_rsa_key *key)
 {
 	asn1_read_object(buff, '\x30');
@@ -45,11 +40,11 @@ static int		asn1_dec_pub_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa
 
 	if (conf->type == PEM)
 	{
-		pts[0] = ft_strnstr(str, public_header, str_len);
+		pts[0] = ft_strnstr(str, g_public_header, str_len);
 		if (pts[0] == NULL)
 			return (print_error("ft_ssl: RSA PEM Public Header not found"));
-		pts[0] += ft_strlen(public_header);
-		pts[1] = ft_strnstr(pts[0], public_footer, str_len);
+		pts[0] += ft_strlen(g_public_header);
+		pts[1] = ft_strnstr(pts[0], g_public_footer, str_len);
 		if (pts[1] == NULL)
 			return (print_error("ft_ssl: RSA PEM Public Footer not found"));
 		buff.buff = dec_base64(pts[0], pts[1] - pts[0], &buff.buff_len);
@@ -101,11 +96,11 @@ static int		asn1_dec_priv_key(char *str, size_t str_len, t_asn1_conf *conf, t_rs
 
 	if (conf->type == PEM)
 	{
-		pts[0] = ft_strnstr(str, private_header, str_len);
+		pts[0] = ft_strnstr(str, g_private_header, str_len);
 		if (pts[0] == NULL)
 			return (print_error("ft_ssl: RSA PEM Private Header not found"));
-		pts[0] += ft_strlen(public_header);
-		pts[1] = ft_strnstr(pts[0], private_footer, str_len);
+		pts[0] += ft_strlen(g_public_header);
+		pts[1] = ft_strnstr(pts[0], g_private_footer, str_len);
 		if (pts[1] == NULL)
 			return (print_error("ft_ssl: RSA PEM Private Footer not found"));
 		buff.buff = dec_base64(pts[0], pts[1] - pts[0], &buff.buff_len);

@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/05/02 14:09:09 by eduwer           ###   ########.fr        #
+#    Updated: 2021/05/03 18:02:57 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC_NAME = main.c \
 	helpers/pow_mod.c \
 	helpers/gen_prime.c \
 	helpers/lcm_gcd.c \
+	helpers/get_pass.c \
 	hash/hash_parse_args.c \
 	hash/hash_process.c \
 	hash/md5/md5.c \
@@ -48,15 +49,16 @@ SRC_NAME = main.c \
 	cipher/des/des_alg.c \
 	cipher/des/read/bufferization.c \
 	cipher/des/read/des_read.c \
-	rsa/rsa_parse_args.c \
 	rsa/genrsa/genrsa.c \
 	rsa/genrsa/parse_genrsa_args.c \
 	rsa/asn/enc/asn1_enc.c \
 	rsa/asn/enc/helpers.c \
 	rsa/asn/dec/asn1_dec.c \
 	rsa/asn/dec/helpers.c \
+	rsa/rsa_parse_args.c \
 	rsa/rsa/parse_rsa_args.c \
-	rsa/rsa/rsa_process.c
+	rsa/rsa/rsa_process.c \
+	rsa/rsa/check_key.c
 
 NAME = ft_ssl
 

@@ -12,7 +12,7 @@
 
 #include <ft_ssl.h>
 
-static uint64_t	add_mod(uint64_t a, uint64_t b, uint64_t mod)
+uint64_t		add_mod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	a = a % mod;
 	b = b % mod;
@@ -21,7 +21,7 @@ static uint64_t	add_mod(uint64_t a, uint64_t b, uint64_t mod)
 	return (a + b);
 }
 
-static uint64_t	mult_mod(uint64_t a, uint64_t b, uint64_t mod)
+uint64_t		mult_mod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	uint64_t res;
 
@@ -40,8 +40,6 @@ uint64_t		pow_mod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	uint64_t res;
 
-	//ft_printf("pow(%lu, %lu, %lu) = ", a, b, mod);
-
 	res = 1;
 	a = a % mod;
 	if (a == 0)
@@ -53,6 +51,5 @@ uint64_t		pow_mod(uint64_t a, uint64_t b, uint64_t mod)
 		b = b >> 1;
 		a = mult_mod(a, a, mod);
 	}
-	//ft_printf("%lu\n", res);
 	return (res);
 }

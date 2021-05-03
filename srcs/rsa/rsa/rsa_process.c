@@ -6,39 +6,96 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 15:08:43 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 17:25:02 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
 
-static void	print_rsa_key(t_rsa_args *args, t_rsa_key *key)
+static int	get_nb_bits(uint64_t n)
+{
+	int	ret;
+
+	if (n == 0)
+		return (1);
+	ret = 64;
+	while ((n & ((uint64_t)1 << (ret - 1))) == 0)
+		ret--;
+	return (ret);
+}
+
+static void	print_rsa_values(t_rsa_args *args, t_rsa_key *key)
 {
 	if (args->pubin)
 	{
-		ft_printf("RSA Public-Key: (64 bit)\nModulus: %lu (0x%x)\nExponent: %d (0x%x)\n", \
-			key->modulus, key->modulus, key->publicExponent, key->publicExponent);
+		ft_fdprintf(args->fd_out, "RSA Public-Key: (%d bit)\nModulus: %lu (0x%lx)\nExponent: %d (0x%lx)\n", \
+			get_nb_bits(key->modulus), key->modulus, key->modulus, key->publicExponent, key->publicExponent);
 	}
 	else
 	{
-		ft_printf("RSA Private-Key: (64 bit, 2 primes)\n");
-		ft_printf("modulus: %lu (0x%lx)\n", key->modulus, key->modulus);
-		ft_printf("publicExponent: %lu (0x%lx)\n", key->publicExponent, key->publicExponent);
-		ft_printf("privateExponent: %lu (0x%lx)\n", key->privateExponent, key->privateExponent);
-		ft_printf("prime1: %lu (0x%lx)\n", key->prime1, key->prime1);
-		ft_printf("prime2: %lu (0x%lx)\n", key->prime2, key->prime2);
-		ft_printf("exponent1: %lu (0x%lx)\n", key->exponent1, key->exponent1);
-		ft_printf("exponent2: %lu (0x%lx)\n", key->exponent2, key->exponent2);
-		ft_printf("coefficient: %lu (0x%lx)\n", key->coefficient, key->coefficient);
+		ft_fdprintf(args->fd_out, "RSA Private-Key: (%d bit, 2 primes)\n", get_nb_bits(key->modulus));
+		ft_fdprintf(args->fd_out, "modulus: %lu (0x%lx)\n", key->modulus, key->modulus);
+		ft_fdprintf(args->fd_out, "publicExponent: %lu (0x%lx)\n", key->publicExponent, key->publicExponent);
+		ft_fdprintf(args->fd_out, "privateExponent: %lu (0x%lx)\n", key->privateExponent, key->privateExponent);
+		ft_fdprintf(args->fd_out, "prime1: %lu (0x%lx)\n", key->prime1, key->prime1);
+		ft_fdprintf(args->fd_out, "prime2: %lu (0x%lx)\n", key->prime2, key->prime2);
+		ft_fdprintf(args->fd_out, "exponent1: %lu (0x%lx)\n", key->exponent1, key->exponent1);
+		ft_fdprintf(args->fd_out, "exponent2: %lu (0x%lx)\n", key->exponent2, key->exponent2);
+		ft_fdprintf(args->fd_out, "coefficient: %lu (0x%lx)\n", key->coefficient, key->coefficient);
 	}
 }
 
-static  int	continue_rsa_process(t_rsa_args *args, t_rsa_key *key)
+static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len)
+{
+	if (args->out_type == DER)
+		write(args->fd_out, enc, enc_len);
+	else
+	{
+		if (args->pubout == true)
+			write(args->fd_out, g_public_header, ft_strlen(g_public_header));
+		else
+			write(args->fd_out, g_private_header, ft_strlen(g_private_header));
+		print_b64_format(enc, enc_len, args->fd_out, 64);
+		if (args->pubout == true)
+			write(args->fd_out, g_public_footer, ft_strlen(g_public_footer));
+		else
+			write(args->fd_out, g_private_footer, ft_strlen(g_private_footer));
+	}
+}
+
+static void	write_rsa_key(t_rsa_args *args, t_rsa_key *key)
+{
+	char		*enc;
+	size_t		enc_len;
+	t_asn1_conf	conf;
+
+	ft_fdprintf(2, "writing RSA key\n");
+	conf.public = args->pubout;
+	conf.des = args->des;
+	conf.type = args->out_type;
+	enc = asn1_enc_key(key, &conf, &enc_len);
+	write_the_key(args, enc, enc_len);
+	free(enc);
+}
+
+static int	continue_rsa_process(t_rsa_args *args, t_rsa_key *key)
 {
 	if (args->pubin == true && args->check == true)
 		return (print_error("Only private keys can be checked"));
+	args->fd_out = 1;
+	if (args->filename_out != NULL && (args->fd_out = \
+		open(args->filename_out, O_RDWR | O_CREAT | O_TRUNC, 0600)) == -1)
+		return (print_errno("Can't open output file: "));
 	if (args->text == true)
-		print_rsa_key(args, key);
+		print_rsa_values(args, key);
+	if (args->modulus == true)
+		ft_fdprintf(args->fd_out, "Modulus=%lX\n", key->modulus);
+	if (args->check == true)
+		check_key(args, key);
+	if (args->noout == false)
+		write_rsa_key(args, key);
+	if (args->fd_out != 1)
+		close(args->fd_out);
 	return (0);
 }
 

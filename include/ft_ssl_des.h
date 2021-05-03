@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 16:58:07 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 18:02:31 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void			gen_subkeys(t_des_args *ctx);
 uint32_t		s_boxes(uint64_t n);
 void			get_salt(t_des_args *ctx);
 void			get_key_iv(t_des_args *ctx);
-void			get_password(t_des_args *ctx);
 int				des_process(t_des_args *args);
 void			des_write_to_file(t_des_args *ctx, uint64_t block);
 void			des_write_salt_to_file(t_des_args *ctx);

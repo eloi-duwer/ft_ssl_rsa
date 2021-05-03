@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:40:18 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 15:02:33 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 17:24:26 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,18 @@ typedef struct	s_rsa_args {
 	bool		pubout;
 }				t_rsa_args;
 
-int				parse_genrsa_args(int ac, char **av);
-int				parse_rsa_args(int ac, char **av);
-int				print_genrsa_usage(void);
-int				print_rsa_usage(void);
-int				genrsa_process(t_genrsa_args *args);
-int				rsa_process(t_rsa_args *args);
-int				get_arg(t_ssl_args *a, char **pt, char *errstr);
+static const char	*g_private_header = "-----BEGIN RSA PRIVATE KEY-----\n";
+static const char	*g_private_footer = "-----END RSA PRIVATE KEY-----\n";
+static const char	*g_public_header = "-----BEGIN PUBLIC KEY-----\n";
+static const char	*g_public_footer = "-----END PUBLIC KEY-----\n";
+
+int					parse_genrsa_args(int ac, char **av);
+int					parse_rsa_args(int ac, char **av);
+int					print_genrsa_usage(void);
+int					print_rsa_usage(void);
+int					genrsa_process(t_genrsa_args *args);
+int					rsa_process(t_rsa_args *args);
+int					get_arg(t_ssl_args *a, char **pt, char *errstr);
+void				check_key(t_rsa_args *args, t_rsa_key *key);
 
 #endif

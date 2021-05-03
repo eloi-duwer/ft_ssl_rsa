@@ -113,7 +113,7 @@ void		wrap_into_bit_string(t_asn1_buff *buff)
 
 	init_asn1_buff(&tmp);
 	write_bytes(&tmp, "\x03", 1);
-	write_size(&tmp, buff->curr_len);
+	write_size(&tmp, buff->curr_len + 1);
 	write_bytes(&tmp, "\x00", 1);
 	write_bytes(&tmp, buff->buff, buff->curr_len);
 	erase_buff(buff);

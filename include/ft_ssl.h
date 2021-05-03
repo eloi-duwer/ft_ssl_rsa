@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/18 19:33:44 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 18:01:15 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,16 @@ void			destroy_rand(t_rand_gen *r);
 void			get_rand(t_rand_gen *r, void *buff, ssize_t size);
 uint64_t		get_64b_rand(t_rand_gen *r);
 uint64_t		get_rand_size(t_rand_gen *r, size_t size);
+char			*get_pass(char *pass_source, size_t min_len, char *ask_phrase);
+char			*get_pass_stdin(char *ask_phrase);
 uint64_t		gen_prime(ssize_t size, t_rand_gen *r);
 uint64_t		pow_mod(uint64_t a, uint64_t b, uint64_t mod);
+uint64_t		mult_mod(uint64_t a, uint64_t b, uint64_t mod);
+uint64_t		add_mod(uint64_t a, uint64_t b, uint64_t mod);
 uint64_t		lcm(uint64_t a, uint64_t b);
 uint64_t		gcd(uint64_t a, uint64_t b);
 uint64_t		gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v);
 int				rsa_args_parsing(int ac, char **av);
+void			print_b64_format(char *b64, size_t b64_len, int fd, size_t n_char_line);
 
 #endif

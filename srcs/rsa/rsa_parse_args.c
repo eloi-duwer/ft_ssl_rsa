@@ -21,6 +21,25 @@ int	print_genrsa_usage(void)
 	return (1);
 }
 
+int	print_rsa_usage(void)
+{
+	ft_printf("Usage: ft_ssl rsa [options]\n\nOptions:\
+\n  -inform format\tInput format, one of DER PEM\
+\n  -outform format\tOutput format, one of DER PEM\
+\n  -in val\t\tInput file\
+\n  -out outfile\t\tOutput file\
+\n  -pubin\t\tExpect a public key in input file\
+\n  -pubout\t\tOutput a public key\
+\n  -passout val\t\tOutput file pass phrase source\
+\n  -passin val\t\tInput file pass phrase source\
+\n  -noout\t\tDon't print key out\
+\n  -text\t\t\tPrint the key in text\
+\n  -modulus\t\tPrint the RSA key modulus\
+\n  -check\t\tVerify key consistency\
+\n  -des\t\t\tEncrypt key with DES\n");
+	return (1);
+}
+
 int	rsa_args_parsing(int ac, char **av)
 {
 	if (ft_strcmp(av[1], "genrsa") == 0)

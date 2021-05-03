@@ -49,16 +49,18 @@ void	asn1_encode_public_key(t_rsa_key *key, t_asn1_buff *buff)
 	t_asn1_buff	rsa_pub_id;
 	t_asn1_buff	public_key;
 
-	init_asn1_buff(buff);
 	init_asn1_buff(&rsa_pub_id);
 	init_asn1_buff(&public_key);
-	write_bytes(buff, g_public_rsa_id, g_public_rsa_id_len);
+	write_bytes(&rsa_pub_id, g_public_rsa_id, g_public_rsa_id_len);
 	write_sequence_u64(&public_key, 2, key->modulus, key->publicExponent);
 	wrap_into_bit_string(&public_key);
+	init_asn1_buff(buff);
 	write_bytes(buff, "\x30", 1);
 	write_size(buff, rsa_pub_id.curr_len + public_key.curr_len);
-	write_bytes(buff, &rsa_pub_id.buff, rsa_pub_id.curr_len);
-	write_bytes(buff, &public_key.buff, public_key.curr_len);
+	write_bytes(buff, rsa_pub_id.buff, rsa_pub_id.curr_len);
+	write_bytes(buff, public_key.buff, public_key.curr_len);
+	erase_buff(&rsa_pub_id);
+	erase_buff(&public_key);
 }
 
 char			*asn1_enc_key(t_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)

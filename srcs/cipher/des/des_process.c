@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/18 19:12:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 18:02:35 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ int				des_process(t_des_args *ctx)
 	if (conv_strs(ctx) != 0)
 		return (1);
 	if (ctx->has_key == false && ctx->password == NULL)
-		get_password(ctx);
+	{
+		ctx->password = get_pass_stdin("des password");
+		if (ctx->password == NULL)
+			return (1);
+		ctx->password_malloced = true;
+	}
 	des_init_next_block(ctx);
 	get_salt(ctx);
 	if (ctx->alg != ecb && ctx->has_key == true && ctx->has_iv == false)

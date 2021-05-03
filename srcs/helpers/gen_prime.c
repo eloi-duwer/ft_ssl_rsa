@@ -16,7 +16,7 @@ uint64_t	gen_prime(ssize_t size, t_rand_gen *r)
 {
 	uint64_t	ret;
 
-	ret = 0;
+	ret = get_rand_size(r, size);
 	while (!is_prime(ret, 42, r))
 		ret = get_rand_size(r, size);
 	return (ret);

@@ -18,23 +18,14 @@ static void	genrsa_enc_print_key(t_rsa_key *key, int fd_out)
 	t_asn1_conf	conf;
 	char		*b64;
 	size_t		b64_len;
-	size_t		i;
 
 	conf.type = PEM;
 	conf.public = false;
 	conf.des = false;
 	b64 = asn1_enc_key(key, &conf, &b64_len);
-	ft_fdprintf(fd_out, "-----BEGIN RSA PRIVATE KEY-----\n");
-	i = 0;
-	while (i < b64_len)
-	{
-		if (i + 64 <= b64_len)
-			ft_fdprintf(fd_out, "%.*s\n", 64, b64 + i);
-		else
-			ft_fdprintf(fd_out, "%.*s\n", b64_len - i, b64 + i);
-		i += 64;
-	}
-	ft_fdprintf(fd_out, "-----END RSA PRIVATE KEY-----\n");
+	ft_fdprintf(fd_out, g_private_header);
+	print_b64_format(b64, b64_len, fd_out, 64);
+	ft_fdprintf(fd_out, g_private_footer);
 	free(b64);
 }
 
