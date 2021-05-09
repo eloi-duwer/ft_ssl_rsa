@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 17:25:02 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/07 16:10:54 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int			rsa_process(t_rsa_args *args)
 	}
 	else if (read_whole_stdin((void **)&in, &size_in) != 0)
 		return (print_errno("ft_ssl: Error while reading stdin: "));
-	ret = asn1_dec_key(in, size_in, &asn1_conf, &key);
+	ret = asn1_dec_key(in, size_in, &asn1_conf, &key, args->passin);
 	free(in);
 	return (continue_rsa_process(args, &key));
 }

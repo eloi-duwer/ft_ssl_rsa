@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:40:18 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 17:24:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/07 16:02:28 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_rsa_args {
 
 static const char	*g_private_header = "-----BEGIN RSA PRIVATE KEY-----\n";
 static const char	*g_private_footer = "-----END RSA PRIVATE KEY-----\n";
+static const char	*g_encrypted_str = "Proc-Type: 4,ENCRYPTED\nDEK-Info: DES-CBC,";
 static const char	*g_public_header = "-----BEGIN PUBLIC KEY-----\n";
 static const char	*g_public_footer = "-----END PUBLIC KEY-----\n";
 

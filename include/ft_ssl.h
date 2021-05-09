@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 18:01:15 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/03 18:45:38 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				print_commands(char *name);
 int				print_errno(char *str);
 int				print_error(char *str);
 char			*print_bits(void *bytes, size_t size);
+void			print_b64_format(char *b64, size_t b64_len, int fd, size_t n_char_line);
 uint64_t		reverse_bits_u64(uint64_t in);
 uint32_t		reverse_bits_u32(uint32_t in);
 uint64_t		swap_bits_u64(uint64_t in, const uint8_t *swap, size_t swap_len);
@@ -65,6 +66,5 @@ uint64_t		lcm(uint64_t a, uint64_t b);
 uint64_t		gcd(uint64_t a, uint64_t b);
 uint64_t		gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v);
 int				rsa_args_parsing(int ac, char **av);
-void			print_b64_format(char *b64, size_t b64_len, int fd, size_t n_char_line);
 
 #endif

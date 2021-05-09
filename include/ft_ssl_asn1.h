@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:06:55 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 15:08:04 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/07 16:11:19 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char 	*g_public_rsa_id 	= "\x30\x0D\x06\x09\x2A\x86\x48\x86\xF7\x0D\x01\x
 static size_t	g_public_rsa_id_len = 15;
 
 char				*asn1_enc_key(struct s_rsa_key *key, t_asn1_conf *conf, size_t *ret_len);
-int					asn1_dec_key(char *str, size_t str_len, t_asn1_conf *conf, struct s_rsa_key *ret);
+int					asn1_dec_key(char *str, size_t str_len, t_asn1_conf *conf, struct s_rsa_key *ret, char *passin);
 void				init_asn1_buff(t_asn1_buff *buff);
 void				erase_buff(t_asn1_buff *buff);
 void				write_bytes(t_asn1_buff *buff, void *bytes, size_t len);
