@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/05/03 18:02:57 by eduwer           ###   ########.fr        #
+#    Updated: 2021/05/13 23:30:00 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,10 @@ SRC_NAME = main.c \
 	rsa/genrsa/parse_genrsa_args.c \
 	rsa/asn/enc/asn1_enc.c \
 	rsa/asn/enc/helpers.c \
+	rsa/asn/enc/asn1_enc_priv_key.c \
 	rsa/asn/dec/asn1_dec.c \
 	rsa/asn/dec/helpers.c \
+	rsa/asn/dec/asn1_dec_priv_key.c \
 	rsa/rsa_parse_args.c \
 	rsa/rsa/parse_rsa_args.c \
 	rsa/rsa/rsa_process.c \

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 18:02:31 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/13 21:50:06 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ typedef struct	s_des_args {
 	bool		decode;
 	char		*filename_in;
 	int			fd_in;
+	char		*str_in;
+	size_t		strlen_in;
+	size_t		pt_str_in;
+	char		*str_out;
+	size_t		strlen_out;
 	bool		next_block_is_last;
 	uint64_t	n_bl;
 	bool		finished_reading;
@@ -68,6 +73,9 @@ typedef struct	s_des_args {
 	size_t		r_buff_used;
 	uint8_t		w_buff[DES_BUFF_SIZE];
 	size_t		w_buff_size;
+	void		(*write_func)(struct s_des_args *, uint64_t);
+	void		(*empty_buffer_func)(struct s_des_args *);
+	void		(*write_salt_func)(struct s_des_args *);
 }				t_des_args;
 
 uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \

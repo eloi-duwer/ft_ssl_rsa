@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 23:55:31 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/12 14:23:14 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/13 21:45:00 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		des_write_to_file(t_des_args *ctx, uint64_t block)
 	uint8_t	n_pad;
 
 	block = reverse_bits_u64(block);
-	if (ctx->decode == true && ctx->finished_reading == true)
+	if (ctx->finished_reading == true && ctx->decode == true)
 	{
 		n_pad = ((uint8_t *)&block)[7];
 		if (n_pad <= 8)

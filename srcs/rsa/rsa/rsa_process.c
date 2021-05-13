@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/07 16:10:54 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/13 22:14:31 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	write_rsa_key(t_rsa_args *args, t_rsa_key *key)
 	conf.public = args->pubout;
 	conf.des = args->des;
 	conf.type = args->out_type;
+	conf.pass = args->passout;
 	enc = asn1_enc_key(key, &conf, &enc_len);
 	write_the_key(args, enc, enc_len);
 	free(enc);
@@ -109,6 +110,7 @@ int			rsa_process(t_rsa_args *args)
 
 	asn1_conf.type = args->in_type;
 	asn1_conf.public = args->pubin;
+	asn1_conf.pass = args->passin;
 	if (args->filename_in)
 	{
 		if ((args->fd_in = open(args->filename_in, O_RDONLY)) == -1)
@@ -119,7 +121,7 @@ int			rsa_process(t_rsa_args *args)
 	}
 	else if (read_whole_stdin((void **)&in, &size_in) != 0)
 		return (print_errno("ft_ssl: Error while reading stdin: "));
-	ret = asn1_dec_key(in, size_in, &asn1_conf, &key, args->passin);
+	ret = asn1_dec_key(in, size_in, &asn1_conf, &key);
 	free(in);
 	return (continue_rsa_process(args, &key));
 }

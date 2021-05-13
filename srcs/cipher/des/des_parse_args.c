@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 16:58:55 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 00:11:54 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static int	get_des_alg(t_des_args *args, char *str)
 int			des_args_parsing(int ac, char **av)
 {
 	t_des_args	args;
+	int			ret;
 
 	ft_bzero(&args, sizeof(t_des_args));
 	args.ac = ac;
@@ -118,5 +119,10 @@ int			des_args_parsing(int ac, char **av)
 		}
 		args.av_i++;
 	}
-	return (des_process(&args));
+	args.write_func = des_write_to_file;
+	args.write_salt_func = des_write_salt_to_file;
+	args.empty_buffer_func = des_empty_buffer;
+	ret = des_process(&args);
+	close(args.fd_out);
+	return (ret);
 }

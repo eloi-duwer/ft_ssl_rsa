@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 16:32:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 16:37:10 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/13 23:55:06 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,26 @@ static void	r_fill_check_base64(t_des_args *ctx)
 	free(dec);
 }
 
+ssize_t	do_read(t_des_args *ctx, void *buff, size_t n_bytes)
+{
+	size_t	readable_len;
+
+	if (ctx->str_in != NULL)
+	{
+		readable_len = ctx->strlen_in - ctx->pt_str_in;
+		if (readable_len == 0)
+			return (0);
+		if (readable_len < n_bytes)
+			n_bytes = readable_len;
+		ft_memcpy(buff, &ctx->str_in[ctx->pt_str_in], n_bytes);
+		ctx->pt_str_in += n_bytes;
+		return (n_bytes);
+	}
+	else
+		return (read(ctx->fd_in, &ctx->r_buff[ctx->r_buff_size], \
+			DES_BUFF_SIZE - ctx->r_buff_size));
+}
+
 /*
 ** Why do we try multiple reads?
 ** In non-canonical mode, a read on tty
@@ -56,7 +76,7 @@ static void	fill_r_buffer(t_des_args *ctx)
 	ctx->r_buff_used = 0;
 	while (ctx->r_buff_size < DES_BUFF_SIZE)
 	{
-		ret = read(ctx->fd_in, &ctx->r_buff[ctx->r_buff_size], \
+		ret = do_read(ctx, &ctx->r_buff[ctx->r_buff_size], \
 			DES_BUFF_SIZE - ctx->r_buff_size);
 		if (ret == -1)
 			exit(print_errno("Error while reading the file: "));

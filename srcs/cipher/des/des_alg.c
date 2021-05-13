@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:13:04 by eduwer            #+#    #+#             */
-/*   Updated: 2021/03/12 12:30:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 00:12:15 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,16 @@ static void		des_block_handle_cbc(t_des_args *ctx, uint64_t block)
 		else
 			ret = ret ^ iv;
 	}
-	des_write_to_file(ctx, ret);
+	(ctx->write_func)(ctx, ret);
 }
 
 int				des_loop_blocks(t_des_args *ctx)
 {
 	uint64_t	block;
 
-	des_write_salt_to_file(ctx);
+	(ctx->write_salt_func)(ctx);
 	while (des_get_next_block(ctx, &block))
 		des_block_handle_cbc(ctx, block);
-	des_empty_buffer(ctx);
-	close(ctx->fd_out);
+	(ctx->empty_buffer_func)(ctx);
 	return (0);
 }

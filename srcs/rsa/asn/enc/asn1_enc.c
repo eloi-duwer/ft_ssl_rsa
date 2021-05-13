@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 01:23:14 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 14:07:49 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/13 23:38:26 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <ft_ssl.h>
 #include <stdarg.h>
 
-static void		write_sequence_u64(t_asn1_buff *buff, size_t n_args, ...)
+void		write_sequence_u64(t_asn1_buff *buff, size_t n_args, ...)
 {
 	va_list		ap;
 	t_asn1_buff	numbers;
@@ -34,14 +34,6 @@ static void		write_sequence_u64(t_asn1_buff *buff, size_t n_args, ...)
 	write_size(buff, numbers.curr_len);
 	write_bytes(buff, numbers.buff, numbers.curr_len);
 	erase_buff(&numbers);
-}
-
-void	asn1_encode_private_key(t_rsa_key *key, t_asn1_buff *buff)
-{
-	init_asn1_buff(buff);
-	write_sequence_u64(buff, 9, (uint64_t)0, key->modulus, \
-		key->publicExponent, key->privateExponent, key->prime1, key->prime2, \
-		key->exponent1, key->exponent2, key->coefficient);
 }
 
 void	asn1_encode_public_key(t_rsa_key *key, t_asn1_buff *buff)
@@ -71,7 +63,7 @@ char			*asn1_enc_key(t_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)
 	if (conf->public == true)
 		asn1_encode_public_key(key, &buff);
 	else
-		asn1_encode_private_key(key, &buff);
+		asn1_encode_private_key(conf, key, &buff);
 	if (conf->type == PEM)
 	{
 		if ((ret = enc_base64(buff.buff, buff.curr_len, ret_len)) == NULL)
