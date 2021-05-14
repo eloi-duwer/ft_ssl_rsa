@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 22:57:39 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 00:14:59 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 18:29:18 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void empty_buffer_des(t_des_args *ctx)
 
 void	    asn1_encode_private_key(t_asn1_conf *conf, t_rsa_key *key, t_asn1_buff *buff)
 {
-	t_des_args des_conf;
+	t_des_args	des_conf;
 
 	init_asn1_buff(buff);
 	write_sequence_u64(buff, 9, (uint64_t)0, key->modulus, \
@@ -53,7 +53,7 @@ void	    asn1_encode_private_key(t_asn1_conf *conf, t_rsa_key *key, t_asn1_buff 
 	if (conf->des == true && conf->type == PEM)
 	{
 		ft_bzero(&des_conf, sizeof(des_conf));
-		des_conf.password = get_pass(conf->pass, 4, "Enter PEM pass phrase");
+		des_conf.password = get_pass(conf->pass, 4, "Enter PEM pass phrase", true);
 		des_conf.password_malloced = true;
 		des_conf.str_in = (char *)buff->buff;
 		des_conf.strlen_in = buff->curr_len;
@@ -70,5 +70,6 @@ void	    asn1_encode_private_key(t_asn1_conf *conf, t_rsa_key *key, t_asn1_buff 
 		buff->buff = (uint8_t *)des_conf.str_out;
 		buff->curr_len = des_conf.strlen_out;
 		buff->buff_len = buff->curr_len;
+		conf->out_salt = des_conf.salt;
 	}
 }

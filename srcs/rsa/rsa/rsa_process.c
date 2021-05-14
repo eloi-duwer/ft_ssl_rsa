@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 22:14:31 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 21:46:24 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	print_rsa_values(t_rsa_args *args, t_rsa_key *key)
 	}
 }
 
-static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len)
+static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len, t_asn1_conf *conf)
 {
 	if (args->out_type == DER)
 		write(args->fd_out, enc, enc_len);
@@ -54,7 +54,14 @@ static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len)
 		if (args->pubout == true)
 			write(args->fd_out, g_public_header, ft_strlen(g_public_header));
 		else
+		{
 			write(args->fd_out, g_private_header, ft_strlen(g_private_header));
+			if (args->des == true)
+			{
+				write(args->fd_out, g_encrypted_str, ft_strlen(g_encrypted_str));
+				ft_fdprintf(args->fd_out, "%.16lX\n\n", conf->out_salt);
+			}
+		}
 		print_b64_format(enc, enc_len, args->fd_out, 64);
 		if (args->pubout == true)
 			write(args->fd_out, g_public_footer, ft_strlen(g_public_footer));
@@ -75,7 +82,7 @@ static void	write_rsa_key(t_rsa_args *args, t_rsa_key *key)
 	conf.type = args->out_type;
 	conf.pass = args->passout;
 	enc = asn1_enc_key(key, &conf, &enc_len);
-	write_the_key(args, enc, enc_len);
+	write_the_key(args, enc, enc_len, &conf);
 	free(enc);
 }
 
@@ -106,7 +113,6 @@ int			rsa_process(t_rsa_args *args)
 	t_rsa_key	key;
 	char		*in;
 	size_t		size_in;
-	int			ret;
 
 	asn1_conf.type = args->in_type;
 	asn1_conf.public = args->pubin;
@@ -121,7 +127,8 @@ int			rsa_process(t_rsa_args *args)
 	}
 	else if (read_whole_stdin((void **)&in, &size_in) != 0)
 		return (print_errno("ft_ssl: Error while reading stdin: "));
-	ret = asn1_dec_key(in, size_in, &asn1_conf, &key);
+	if (asn1_dec_key(in, size_in, &asn1_conf, &key) != 0)
+		return (1);
 	free(in);
 	return (continue_rsa_process(args, &key));
 }

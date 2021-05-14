@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 20:12:20 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 23:33:31 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 18:21:42 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,18 @@ static int		asn1_dec_des_priv_key(char *pts[2], t_asn1_buff *buff, char *passin)
 	char		salt[17];
 	t_des_args	des_conf;
 
-	if ((des_conf.password = get_pass(passin, 4, "Enter PEM pass phrase")) == NULL)
+	ft_bzero(&des_conf, sizeof(des_conf));
+	if ((des_conf.password = get_pass(passin, 4, "Enter PEM pass phrase", false)) == NULL)
 		return (1);
 	pts[0] += ft_strlen(g_encrypted_str);
-	if (pts[0] + 18 <= pts[1])
+	if (pts[0] + 18 >= pts[1])
 		return (print_error("The input key has a wrong format (too short)"));
-	ft_bzero(&des_conf, sizeof(des_conf));
 	ft_strncpy(salt, pts[0], 16);
 	salt[16] = '\0';
 	pts[0] += 18;
 	des_conf.salt_str = salt;
 	des_conf.has_salt = true;
+	des_conf.no_salt = true;
 	des_conf.alg = cbc;
 	des_conf.password_malloced = true;
 	des_conf.decode = true;
@@ -130,7 +131,7 @@ int		asn1_dec_priv_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa_key *
 		pts[0] = ft_strnstr(str, g_private_header, str_len);
 		if (pts[0] == NULL)
 			return (print_error("ft_ssl: RSA PEM Private Header not found"));
-		pts[0] += ft_strlen(g_public_header);
+		pts[0] += ft_strlen(g_private_header);
 		pts[1] = ft_strnstr(pts[0], g_private_footer, str_len);
 		if (pts[1] == NULL)
 			return (print_error("ft_ssl: RSA PEM Private Footer not found"));

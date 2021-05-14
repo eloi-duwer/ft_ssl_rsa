@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:06:55 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 23:28:57 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 17:25:03 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_asn1_conf {
 	bool		public;
 	bool		des;
 	char		*pass;
+	uint64_t	out_salt;
 }				t_asn1_conf;
 
 typedef struct	s_asn1_buff {

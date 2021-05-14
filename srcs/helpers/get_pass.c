@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 17:48:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 18:42:42 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 18:08:20 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** https://www.gnu.org/software/libc/manual/html_node/getpass.html
 */
 
-char	*get_pass_stdin(char *ask_phrase)
+char	*get_pass_stdin(char *ask_phrase, bool verify_pass)
 {
 	struct termios	old;
 	struct termios	new;
@@ -37,19 +37,23 @@ char	*get_pass_stdin(char *ask_phrase)
 	if (get_next_line(0, &pass) == -1)
 		exit(print_errno("Can't get password: "));
 	ft_printf("\n");
-	ft_printf("Verifying - %s: ", ask_phrase);
-	if (get_next_line(0, &verify) == -1)
-		exit(print_errno("Can't get password: "));
-	ft_printf("\n");
-	tcsetattr(0, TCSAFLUSH, &old);
-	if (ft_strcmp(pass, verify) != 0)
+	if (verify_pass == true)
 	{
-		ft_fdprintf(2, "Verify failure: The passwords don't match\n");
+		ft_printf("Verifying - %s: ", ask_phrase);
+		if (get_next_line(0, &verify) == -1)
+			exit(print_errno("Can't get password: "));
+		ft_printf("\n");
+		if (ft_strcmp(pass, verify) != 0)
+		{
+			ft_fdprintf(2, "Verify failure: The passwords don't match\n");
+			free(verify);
+			free(pass);
+			tcsetattr(0, TCSAFLUSH, &old);
+			return (NULL);
+		}
 		free(verify);
-		free(pass);
-		return (NULL);
 	}
-	free(verify);
+	tcsetattr(0, TCSAFLUSH, &old);
 	return (pass);
 }
 
@@ -112,12 +116,12 @@ char	*get_pass_file(char *filename)
 	return (ret);
 }
 
-char	*get_pass(char *pass_source, size_t min_len, char *ask_phrase)
+char	*get_pass(char *pass_source, size_t min_len, char *ask_phrase, bool verfify_pass)
 {
 	char	*ret;
 
 	if (pass_source == NULL || ft_strcmp(pass_source, "stdin") == 0)
-		ret = get_pass_stdin(ask_phrase);
+		ret = get_pass_stdin(ask_phrase, verfify_pass);
 	else if (ft_strncmp(pass_source, "pass:", 5) == 0)
 		ret = ft_strdup(pass_source + 5);
 	else if (ft_strncmp(pass_source, "env:", 4) == 0)

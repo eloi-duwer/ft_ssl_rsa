@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 00:11:54 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 19:44:56 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int			des_args_parsing(int ac, char **av)
 	args.write_salt_func = des_write_salt_to_file;
 	args.empty_buffer_func = des_empty_buffer;
 	ret = des_process(&args);
+	if (args.base64 == true)
+		write(args.fd_out, "\n", 1);
 	close(args.fd_out);
 	return (ret);
 }
