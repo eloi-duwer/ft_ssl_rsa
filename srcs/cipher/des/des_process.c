@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 18:22:33 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/14 22:13:53 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int				des_process(t_des_args *ctx)
 		return (print_error("All des modes (except ecb) needs an iv"));
 	if (ctx->has_key == false)
 		get_key_iv(ctx);
-	ft_printf("Salt is %.16lX\n", ctx->salt);
-	ft_printf("DES key is %.16lX\nDES iv  is %.16lX\n", ctx->key, ctx->iv);
 	if (ctx->print_keys)
 	{
 		ft_printf("Salt= %.16lX\n", ctx->salt);

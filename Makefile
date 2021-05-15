@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/05/13 23:30:00 by eduwer           ###   ########.fr        #
+#    Updated: 2021/05/15 18:53:25 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ SRC_NAME = main.c \
 	rsa/rsa_parse_args.c \
 	rsa/rsa/parse_rsa_args.c \
 	rsa/rsa/rsa_process.c \
-	rsa/rsa/check_key.c
+	rsa/rsa/check_key.c \
+	rsa/rsautl/parse_rsautl_args.c \
+	rsa/rsautl/rsautl_process.c
 
 NAME = ft_ssl
 

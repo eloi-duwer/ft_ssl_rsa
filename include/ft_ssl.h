@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 17:52:59 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/15 18:29:57 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <errno.h>
 # include <string.h>
 
-typedef	struct	s_ssl_args {
+typedef	struct	s_ac_av {
 	int			i;
 	int			ac;
 	char		**av;
-}				t_ssl_args;
+}				t_ac_av;
 
 typedef struct	s_rand_gen {
 	int			fd;

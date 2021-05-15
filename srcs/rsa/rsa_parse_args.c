@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 18:11:11 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 17:23:17 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/15 18:37:25 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,26 @@ int	print_rsa_usage(void)
 	return (1);
 }
 
+int	print_rsautl_usage(void)
+{
+	ft_printf("Usage: ft_ssal rsautl [options]\n\nOptions:\
+\n  -in file\tInput file\
+\n  -out file\tOutput file\
+\n  -inkey key\tInput key file\
+\n  -pubin\t\tInput key is an RSA public key\
+\n  -encrypt\t\tEncrypt with public key (default)\
+\n  -decrypt\t\tDecrypt with private key\
+\n  -hexdump\t\tHex dump output");
+	return (1);
+}
+
 int	rsa_args_parsing(int ac, char **av)
 {
 	if (ft_strcmp(av[1], "genrsa") == 0)
 		return parse_genrsa_args(ac, av);
 	else if (ft_strcmp(av[1], "rsa") == 0)
 		return parse_rsa_args(ac, av);
-	/*else if (ft_strcmp(av[1], "rsault") == 0)
-		return (parse_rsault_args(ac, av));*/
+	else if (ft_strcmp(av[1], "rsault") == 0)
+		return (parse_rsault_args(ac, av));
 	return (print_commands(av[1]));
 }

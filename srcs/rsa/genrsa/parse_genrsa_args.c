@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 18:43:00 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 17:31:13 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/15 18:28:27 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
 #include <ft_ssl.h>
 
-int			get_arg(t_ssl_args *a, char **pt, char *errstr)
+int			get_arg(t_ac_av *a, char **pt, char *errstr)
 {
 	a->i++;
 	if (a->i >= a->ac)
@@ -25,7 +25,7 @@ int			get_arg(t_ssl_args *a, char **pt, char *errstr)
 	return (0);
 }
 
-static int	genrsa_parse_subargs(t_genrsa_args *args, t_ssl_args *a)
+static int	genrsa_parse_subargs(t_genrsa_args *args, t_ac_av *a)
 {
 	if (ft_strcmp(a->av[a->i], "-i") == 0)
 	{
@@ -45,7 +45,7 @@ static int	genrsa_parse_subargs(t_genrsa_args *args, t_ssl_args *a)
 int			parse_genrsa_args(int ac, char **av)
 {
 	t_genrsa_args	args;
-	t_ssl_args		a;
+	t_ac_av		a;
 
 	ft_bzero(&args, sizeof(t_genrsa_args));
 	a.i = 2;

@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:16:37 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 15:11:25 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/15 18:28:27 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
 #include <ft_ssl.h>
 
-static int	rsa_parse_in_outform(t_ssl_args *a, enum e_type *type)
+static int	rsa_parse_in_outform(t_ac_av *a, enum e_type *type)
 {
 	char *str;
 
@@ -28,7 +28,7 @@ static int	rsa_parse_in_outform(t_ssl_args *a, enum e_type *type)
 	return (0);
 }
 
-static int	rsa_parse_subargs(t_rsa_args *args, t_ssl_args *a)
+static int	rsa_parse_subargs(t_rsa_args *args, t_ac_av *a)
 {
 	if (ft_strcmp(a->av[a->i], "-des") == 0)
 		args->des = true;
@@ -85,7 +85,7 @@ static int	rsa_parse_subargs(t_rsa_args *args, t_ssl_args *a)
 int			parse_rsa_args(int ac, char **av)
 {
 	t_rsa_args	args;
-	t_ssl_args	a;
+	t_ac_av	a;
 
 	ft_bzero(&args, sizeof(args));
 	a.i = 2;
