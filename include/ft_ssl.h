@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/15 18:29:57 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:20 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef	struct	s_ac_av {
 	int			ac;
 	char		**av;
 }				t_ac_av;
+
+typedef struct	s_buff {
+	uint8_t		*buff;
+	size_t		curr_len;
+	size_t		buff_len;
+}				t_buff;
 
 typedef struct	s_rand_gen {
 	int			fd;

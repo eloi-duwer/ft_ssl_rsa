@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 13:39:15 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 14:04:00 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 #include <ft_ssl_asn1.h>
 
-uint8_t	asn1_read_byte(t_asn1_buff *buff)
+uint8_t	asn1_read_byte(t_buff *buff)
 {
 	size_t	ret;
 
@@ -24,7 +24,7 @@ uint8_t	asn1_read_byte(t_asn1_buff *buff)
 	return (ret);
 }
 
-size_t	asn1_read_size(t_asn1_buff *buff)
+size_t	asn1_read_size(t_buff *buff)
 {
 	size_t	len;
 	size_t	tmp;
@@ -52,7 +52,7 @@ size_t	asn1_read_size(t_asn1_buff *buff)
 ** Returns the length of the sequence
 */
 
-size_t	asn1_read_object(t_asn1_buff *buff, uint8_t identifier)
+size_t	asn1_read_object(t_buff *buff, uint8_t identifier)
 {
 	size_t	size;
 	uint8_t	tmp;
@@ -71,7 +71,7 @@ size_t	asn1_read_object(t_asn1_buff *buff, uint8_t identifier)
 	return (size);
 }
 
-uint64_t	asn1_read_integer(t_asn1_buff *buff)
+uint64_t	asn1_read_integer(t_buff *buff)
 {
 	uint64_t	ret;
 	uint8_t		tmp;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:19:56 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/30 00:07:37 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 18:07:05 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		genrsa_process(t_genrsa_args *args)
 	init_rand(&rand, args->filename_rand);
 	genrsa_gen_key(args, &rand);
 	destroy_rand(&rand);
-	close(args->fd_out);
+	if (args->fd_out != 1)
+		close(args->fd_out);
 	return (0);
 }

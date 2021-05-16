@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 18:05:33 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/15 18:32:16 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 18:02:21 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int parse_rsault_args(int ac, char **av)
             ft_fdprintf(2, "Extra operand: '%s'\n", a.av[a.i]);
             return (1);
         }
+		a.i++;
     }
     if (args.inkey_file == NULL)
         return (print_error("No keyfile specified"));

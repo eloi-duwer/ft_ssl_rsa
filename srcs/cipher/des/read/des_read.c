@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 02:41:42 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 00:12:27 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:09:39 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 static bool		set_finished_reading(t_des_args *ctx)
 {
-	close(ctx->fd_in);
+	if (ctx->fd_in != 0)
+		close(ctx->fd_in);
 	ctx->finished_reading = true;
 	return (true);
 }

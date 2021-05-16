@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:05:56 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/02 13:44:53 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_asn1.h>
 #include <ft_ssl.h>
 
-void		init_asn1_buff(t_asn1_buff *buff)
+void		init_buff(t_buff *buff)
 {
 	buff->curr_len = 0;
 	buff->buff_len = 512;
@@ -21,7 +21,7 @@ void		init_asn1_buff(t_asn1_buff *buff)
 		exit(print_errno("ft_ssl (malloc)"));
 }
 
-void		erase_buff(t_asn1_buff *buff)
+void		erase_buff(t_buff *buff)
 {
 	if (buff->buff != NULL)
 	{
@@ -32,7 +32,7 @@ void		erase_buff(t_asn1_buff *buff)
 	buff->curr_len = 0;
 }
 
-void		write_bytes(t_asn1_buff *buff, void *bytes, size_t len)
+void		write_bytes(t_buff *buff, void *bytes, size_t len)
 {
 	uint8_t	*tmp;
 	size_t	max;
@@ -49,7 +49,7 @@ void		write_bytes(t_asn1_buff *buff, void *bytes, size_t len)
 	buff->curr_len += len;
 }
 
-void		write_size(t_asn1_buff *buff, size_t n)
+void		write_size(t_buff *buff, size_t n)
 {
 	uint8_t	b;
 	uint8_t	c;
@@ -71,7 +71,7 @@ void		write_size(t_asn1_buff *buff, size_t n)
 	}
 }
 
-void		write_integer(t_asn1_buff *buff, uint64_t n)
+void		write_integer(t_buff *buff, uint64_t n)
 {
 	uint8_t	n_bytes;
 	uint8_t	tmp;
@@ -107,15 +107,15 @@ void		write_integer(t_asn1_buff *buff, uint64_t n)
 	}
 }
 
-void		wrap_into_bit_string(t_asn1_buff *buff)
+void		wrap_into_bit_string(t_buff *buff)
 {
-	t_asn1_buff tmp;
+	t_buff tmp;
 
-	init_asn1_buff(&tmp);
+	init_buff(&tmp);
 	write_bytes(&tmp, "\x03", 1);
 	write_size(&tmp, buff->curr_len + 1);
 	write_bytes(&tmp, "\x00", 1);
 	write_bytes(&tmp, buff->buff, buff->curr_len);
 	erase_buff(buff);
-	ft_memcpy(buff, &tmp, sizeof(t_asn1_buff));
+	ft_memcpy(buff, &tmp, sizeof(t_buff));
 }

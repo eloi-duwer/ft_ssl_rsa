@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 19:44:56 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:10:02 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int			des_args_parsing(int ac, char **av)
 	ret = des_process(&args);
 	if (args.base64 == true)
 		write(args.fd_out, "\n", 1);
-	close(args.fd_out);
+	if (args.fd_out != 1)
+		close(args.fd_out);
 	return (ret);
 }

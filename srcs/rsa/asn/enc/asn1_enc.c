@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 01:23:14 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 23:38:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include <ft_ssl.h>
 #include <stdarg.h>
 
-void		write_sequence_u64(t_asn1_buff *buff, size_t n_args, ...)
+void		write_sequence_u64(t_buff *buff, size_t n_args, ...)
 {
 	va_list		ap;
-	t_asn1_buff	numbers;
+	t_buff	numbers;
 	uint64_t	n;
 
-	init_asn1_buff(&numbers);
+	init_buff(&numbers);
 	va_start(ap, n_args);
 	while (n_args > 0)
 	{
@@ -36,17 +36,17 @@ void		write_sequence_u64(t_asn1_buff *buff, size_t n_args, ...)
 	erase_buff(&numbers);
 }
 
-void	asn1_encode_public_key(t_rsa_key *key, t_asn1_buff *buff)
+void	asn1_encode_public_key(t_rsa_key *key, t_buff *buff)
 {
-	t_asn1_buff	rsa_pub_id;
-	t_asn1_buff	public_key;
+	t_buff	rsa_pub_id;
+	t_buff	public_key;
 
-	init_asn1_buff(&rsa_pub_id);
-	init_asn1_buff(&public_key);
+	init_buff(&rsa_pub_id);
+	init_buff(&public_key);
 	write_bytes(&rsa_pub_id, g_public_rsa_id, g_public_rsa_id_len);
 	write_sequence_u64(&public_key, 2, key->modulus, key->publicExponent);
 	wrap_into_bit_string(&public_key);
-	init_asn1_buff(buff);
+	init_buff(buff);
 	write_bytes(buff, "\x30", 1);
 	write_size(buff, rsa_pub_id.curr_len + public_key.curr_len);
 	write_bytes(buff, rsa_pub_id.buff, rsa_pub_id.curr_len);
@@ -57,7 +57,7 @@ void	asn1_encode_public_key(t_rsa_key *key, t_asn1_buff *buff)
 
 char			*asn1_enc_key(t_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)
 {
-	t_asn1_buff	buff;
+	t_buff	buff;
 	char		*ret;
 
 	if (conf->public == true)

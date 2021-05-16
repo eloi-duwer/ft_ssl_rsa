@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 20:12:20 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 18:21:42 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <ft_ssl_rsa.h>
 #include <ft_ssl_base64.h>
 
-static int		asn1_priv_do_read_key(t_asn1_buff *buff, t_rsa_key *key)
+static int		asn1_priv_do_read_key(t_buff *buff, t_rsa_key *key)
 {
 	uint64_t	tmp;
 	char		*err;
@@ -85,7 +85,7 @@ static void     empty_buffer_des(t_des_args *args)
 	(void)args;
 }
 
-static int		asn1_dec_des_priv_key(char *pts[2], t_asn1_buff *buff, char *passin)
+static int		asn1_dec_des_priv_key(char *pts[2], t_buff *buff, char *passin)
 {
 	char		salt[17];
 	t_des_args	des_conf;
@@ -122,7 +122,7 @@ static int		asn1_dec_des_priv_key(char *pts[2], t_asn1_buff *buff, char *passin)
 
 int		asn1_dec_priv_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa_key *key)
 {
-	t_asn1_buff	buff;
+	t_buff	buff;
 	char		*pts[2];
 	int			ret;
 

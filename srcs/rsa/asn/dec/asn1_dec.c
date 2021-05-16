@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 23:29:19 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 22:13:44 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <ft_ssl_base64.h>
 #include <ft_ssl_des.h>
 
-static int		asn1_pub_do_read_key(t_asn1_buff *buff, t_rsa_key *key)
+static int		asn1_pub_do_read_key(t_buff *buff, t_rsa_key *key)
 {
 	asn1_read_object(buff, '\x30');
 	if (buff->curr_len + g_public_rsa_id_len > buff->buff_len \
@@ -35,7 +35,7 @@ static int		asn1_pub_do_read_key(t_asn1_buff *buff, t_rsa_key *key)
 
 static int		asn1_dec_pub_key(char *str, size_t str_len, t_asn1_conf *conf, t_rsa_key *key)
 {
-	t_asn1_buff	buff;
+	t_buff	buff;
 	char		*pts[2];
 	int			ret;
 
