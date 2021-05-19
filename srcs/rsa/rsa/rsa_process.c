@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 21:46:24 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/19 00:51:11 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static void	print_rsa_values(t_rsa_args *args, t_rsa_key *key)
 	else
 	{
 		ft_fdprintf(args->fd_out, "RSA Private-Key: (%d bit, 2 primes)\n", get_nb_bits(key->modulus));
-		ft_fdprintf(args->fd_out, "modulus: %lu (0x%lx)\n", key->modulus, key->modulus);
-		ft_fdprintf(args->fd_out, "publicExponent: %lu (0x%lx)\n", key->publicExponent, key->publicExponent);
-		ft_fdprintf(args->fd_out, "privateExponent: %lu (0x%lx)\n", key->privateExponent, key->privateExponent);
-		ft_fdprintf(args->fd_out, "prime1: %lu (0x%lx)\n", key->prime1, key->prime1);
-		ft_fdprintf(args->fd_out, "prime2: %lu (0x%lx)\n", key->prime2, key->prime2);
-		ft_fdprintf(args->fd_out, "exponent1: %lu (0x%lx)\n", key->exponent1, key->exponent1);
-		ft_fdprintf(args->fd_out, "exponent2: %lu (0x%lx)\n", key->exponent2, key->exponent2);
-		ft_fdprintf(args->fd_out, "coefficient: %lu (0x%lx)\n", key->coefficient, key->coefficient);
+		ft_fdprintf(args->fd_out, "modulus: %llu (0x%llx)\n", key->modulus, key->modulus);
+		ft_fdprintf(args->fd_out, "publicExponent: %llu (0x%llx)\n", key->publicExponent, key->publicExponent);
+		ft_fdprintf(args->fd_out, "privateExponent: %llu (0x%llx)\n", key->privateExponent, key->privateExponent);
+		ft_fdprintf(args->fd_out, "prime1: %llu (0x%llx)\n", key->prime1, key->prime1);
+		ft_fdprintf(args->fd_out, "prime2: %llu (0x%llx)\n", key->prime2, key->prime2);
+		ft_fdprintf(args->fd_out, "exponent1: %llu (0x%llx)\n", key->exponent1, key->exponent1);
+		ft_fdprintf(args->fd_out, "exponent2: %llu (0x%llx)\n", key->exponent2, key->exponent2);
+		ft_fdprintf(args->fd_out, "coefficient: %llu (0x%llx)\n", key->coefficient, key->coefficient);
 	}
 }
 
@@ -59,7 +59,7 @@ static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len, t_asn1_co
 			if (args->des == true)
 			{
 				write(args->fd_out, g_encrypted_str, ft_strlen(g_encrypted_str));
-				ft_fdprintf(args->fd_out, "%.16lX\n\n", conf->out_salt);
+				ft_fdprintf(args->fd_out, "%.16llX\n\n", conf->out_salt);
 			}
 		}
 		print_b64_format(enc, enc_len, args->fd_out, 64);
@@ -97,7 +97,7 @@ static int	continue_rsa_process(t_rsa_args *args, t_rsa_key *key)
 	if (args->text == true)
 		print_rsa_values(args, key);
 	if (args->modulus == true)
-		ft_fdprintf(args->fd_out, "Modulus=%lX\n", key->modulus);
+		ft_fdprintf(args->fd_out, "Modulus=%llX\n", key->modulus);
 	if (args->check == true)
 		check_key(args, key);
 	if (args->noout == false)

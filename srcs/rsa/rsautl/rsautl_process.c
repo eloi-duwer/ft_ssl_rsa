@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 18:26:30 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 18:11:15 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/19 19:18:59 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int		print_data(t_rsautl_args *args, uint64_t msg)
 
 static uint64_t	decrypt_msg(t_rsa_key *key, uint64_t msg)
 {
+	//return pow_mod(msg, key->privateExponent, key->modulus);
 	uint64_t	m1;
 	uint64_t	m2;
 	uint64_t	h;
@@ -53,9 +54,11 @@ static uint64_t	decrypt_msg(t_rsa_key *key, uint64_t msg)
 	if (m1 > m2)
 		h = m1 - m2;
 	else
-		h = (m1 + key->prime1) - m2;
+		h = (m1 + key->prime1 * (m2 / key->prime1 + 1)) - m2;
+	//ft_printf("msg = %llu, m1 = %llu, m2  = %llu, h = %llu\n", msg, m1, m2, h);
 	h = mult_mod(key->coefficient, h, key->prime1);
-	return (m2 + (h * key->exponent2));
+	//ft_printf("mult mod = %llu\n", h);
+	return (m2 + (h * key->prime2));
 }
 
 static int  	continue_rsautl_process(t_rsautl_args *args, t_rsa_key *key, t_buff *msg_buff)
@@ -78,7 +81,10 @@ static int  	continue_rsautl_process(t_rsautl_args *args, t_rsa_key *key, t_buff
 	}
 	free(msg_buff->buff);
 	if (msg > key->modulus)
+	{
+		ft_printf("msg = %llX, mod = %llX\n", msg, key->modulus);
 		return (print_error("Data greater than mod len"));
+	}
 	if (args->decrypt == false)
 		msg = pow_mod(msg, key->publicExponent, key->modulus);
 	else
