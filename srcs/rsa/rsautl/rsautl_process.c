@@ -6,11 +6,41 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 18:26:30 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/19 19:18:59 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/19 19:49:39 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
+
+static int		hexdump_data(int fd, uint64_t msg)
+{
+	char	dump[8];
+	int		i;
+
+	i = 0;
+	ft_fdprintf(fd, "0000 -");
+	while (i < 8)
+	{
+		dump[i] = msg & 0xFF;
+		ft_fdprintf(fd, " %.02x", (unsigned int)dump[i]);
+		msg >>= 8;
+		i++;
+	}
+	ft_fdprintf(fd, "-                          ");
+	i = 0;
+	while (i < 8)
+	{
+		if (ft_isprint(dump[i]))
+			ft_fdprintf(fd, "%c", dump[i]);
+		else
+			ft_fdprintf(fd, ".");
+		i++;
+	}
+	ft_fdprintf(fd, "\n");
+	if (fd != 0)
+		close(fd);
+	return (0);
+}
 
 static int		print_data(t_rsautl_args *args, uint64_t msg)
 {
@@ -24,27 +54,30 @@ static int		print_data(t_rsautl_args *args, uint64_t msg)
 	msg = reverse_bits_u64(msg);
 	i = 0;
 	if (args->hexdump == true)
-		ft_fdprintf(fd, "0000 -");
+		return (hexdump_data(fd, msg));
 	while (i < 8)
 	{
 		c = msg & 0xFF;
-		if (args->hexdump == true)
-			ft_fdprintf(fd, " %.02x", (unsigned int)c);
-		else
-			write(fd, &c, 1);
+		write(fd, &c, 1);
 		msg >>= 8;
 		i++;
 	}
-	if (args->hexdump == true)
-		ft_fdprintf(fd, "-\n");
 	if (fd != 0)
 		close(fd);
 	return (0);
 }
 
+/*
+** Decrypt using the Chinese Remainder Theorem (cf Wikipedia's page on RSA)
+** Unfortunately we are working with unsigned numbers,
+** So m1 - m2 must not be negative
+** Fortunately we then do a modulo prime1 on this substraction, so in the case it happens
+** we add prime1 enough time so that the result of m1 - m2 falls between 0 and prime1:
+** m1 + key->prime1 * (m2 / key->prime1 + 1) 
+*/
+
 static uint64_t	decrypt_msg(t_rsa_key *key, uint64_t msg)
 {
-	//return pow_mod(msg, key->privateExponent, key->modulus);
 	uint64_t	m1;
 	uint64_t	m2;
 	uint64_t	h;
@@ -55,9 +88,7 @@ static uint64_t	decrypt_msg(t_rsa_key *key, uint64_t msg)
 		h = m1 - m2;
 	else
 		h = (m1 + key->prime1 * (m2 / key->prime1 + 1)) - m2;
-	//ft_printf("msg = %llu, m1 = %llu, m2  = %llu, h = %llu\n", msg, m1, m2, h);
 	h = mult_mod(key->coefficient, h, key->prime1);
-	//ft_printf("mult mod = %llu\n", h);
 	return (m2 + (h * key->prime2));
 }
 
