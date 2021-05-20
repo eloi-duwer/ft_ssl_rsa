@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:06:55 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 17:44:50 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 19:00:36 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char				*asn1_enc_key(struct s_rsa_key *key, t_asn1_conf *conf, size_t *ret_len)
 void				asn1_encode_private_key(t_asn1_conf *conf, struct s_rsa_key *key, t_buff *buff);
 int					asn1_dec_key(char *str, size_t str_len, t_asn1_conf *conf, struct s_rsa_key *ret);
 int					asn1_dec_priv_key(char *str, size_t str_len, t_asn1_conf *conf, struct s_rsa_key *key);
-void				init_buff(t_buff *buff);
-void				erase_buff(t_buff *buff);
 void				write_bytes(t_buff *buff, void *bytes, size_t len);
 void				write_size(t_buff *buff, size_t n);
 void				write_integer(t_buff *buff, uint64_t n);

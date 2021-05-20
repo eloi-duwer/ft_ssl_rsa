@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/13 21:50:06 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 21:11:35 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ typedef struct	s_des_args {
 
 uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \
 					size_t salt_len, size_t dk_len_bytes);
-uint8_t			*openssl_kdf(char *password, uint8_t *salt, \
-					size_t salt_len, size_t dk_len);
+uint8_t			*openssl_kdf(uint8_t *(*hash_func)(uint8_t *, size_t), size_t hash_len, \
+				char *password, uint8_t *salt, size_t salt_len, size_t target_len);
 uint8_t			*hmac_sha256(char *password, uint8_t *msg, size_t msg_len);
 void			gen_subkeys(t_des_args *ctx);
 uint32_t		s_boxes(uint64_t n);

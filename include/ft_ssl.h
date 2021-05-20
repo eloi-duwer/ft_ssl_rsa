@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 16:19:20 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 19:00:44 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ uint64_t		lcm(uint64_t a, uint64_t b);
 uint64_t		gcd(uint64_t a, uint64_t b);
 uint64_t		gcd_ext(uint64_t a, uint64_t b, uint64_t *u, uint64_t *v);
 int				rsa_args_parsing(int ac, char **av);
+void			init_buff(t_buff *buff);
+void			erase_buff(t_buff *buff);
 
 #endif

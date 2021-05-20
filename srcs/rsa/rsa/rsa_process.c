@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/19 00:51:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 21:58:46 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	write_the_key(t_rsa_args *args, char *enc, size_t enc_len, t_asn1_co
 			if (args->des == true)
 			{
 				write(args->fd_out, g_encrypted_str, ft_strlen(g_encrypted_str));
-				ft_fdprintf(args->fd_out, "%.16llX\n\n", conf->out_salt);
+				ft_fdprintf(args->fd_out, "%.16llX\n\n", reverse_bits_u64(conf->out_salt));
 			}
 		}
 		print_b64_format(enc, enc_len, args->fd_out, 64);

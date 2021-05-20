@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 21:29:11 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 19:34:43 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 22:03:15 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,61 @@
 #include <ft_ssl.h>
 #include <ft_ssl_hash.h>
 
-#ifdef __APPLE__
-# define HASH raw_md5
-# define HASH_LEN 16
-#else
-# define HASH raw_sha256
-# define HASH_LEN 32
-#endif
-#define CONCAT 0
-#define RET 1
-#define HASH_RET 2
-#define TMP 3
-
-uint8_t		*openssl_kdf(char *password, uint8_t *salt, \
-			size_t salt_len, size_t dk_len_bytes)
+static int	concat_buff(t_buff *ret, t_buff *buff, char *password, size_t pw_len, uint8_t *salt, size_t salt_len)
 {
-	size_t	pwd_len;
-	uint8_t	*buffs[4];
-	size_t	ret_len;
+	uint8_t	*tmp;
 
-	pwd_len = ft_strlen(password);
-	if ((buffs[CONCAT] = (uint8_t *)malloc(HASH_LEN + pwd_len + salt_len)) == NULL)
-		return (NULL);
-	ret_len = 0;
-	buffs[RET] = NULL;
-	while (ret_len < dk_len_bytes)
+	tmp = (uint8_t *)malloc(buff->buff_len + pw_len + salt_len);
+	if (tmp == NULL)
+		return (print_errno("ft_ssl: malloc error: "));
+	ft_memcpy(tmp, buff->buff, buff->buff_len);
+	ft_memcpy(tmp + buff->buff_len, password, pw_len);
+	ft_memcpy(tmp + buff->buff_len + pw_len, salt, salt_len);
+	ret->buff = tmp;
+	ret->buff_len = buff->buff_len + pw_len + salt_len;
+	return (0);
+}
+
+static int	concat_ret(t_buff *ret, t_buff *block)
+{
+	uint8_t	*tmp;
+
+		tmp = (uint8_t *)malloc(ret->buff_len + block->buff_len);
+	if (tmp == NULL)
+		return (print_errno("ft_ssl: malloc error: "));
+	ft_memcpy(tmp, ret->buff, ret->buff_len);
+	ft_memcpy(tmp + ret->buff_len, block->buff, block->buff_len);
+	free(ret->buff);
+	ret->buff = tmp;
+	ret->buff_len = ret->buff_len + block->buff_len;
+	return (0);
+}
+
+uint8_t		*openssl_kdf(uint8_t *(*hash_func)(uint8_t *, size_t), size_t hash_len, \
+	char *password, uint8_t *salt, size_t salt_len, size_t target_len)
+{
+	t_buff	ret;
+	t_buff	block;
+	t_buff	hash_ret;
+
+	ft_bzero(&ret, sizeof(ret));
+	ft_bzero(&block, sizeof(block));
+	ft_bzero(&hash_ret, sizeof(hash_ret));
+	while (ret.buff_len < target_len)
 	{
-		if (ret_len == 0)
-		{
-			ft_memcpy(buffs[CONCAT], password, pwd_len);
-			ft_memcpy(&((buffs[CONCAT])[pwd_len]), salt, salt_len);
-			buffs[HASH_RET] = HASH(buffs[CONCAT], pwd_len + salt_len);
-		}
-		else
-		{
-			ft_memcpy(buffs[CONCAT], &(buffs[RET][ret_len]), HASH_LEN);
-			buffs[HASH_RET] = HASH(buffs[CONCAT], HASH_LEN + pwd_len + salt_len);
-		}
-		if (buffs[HASH_RET] == NULL)
+		if (concat_buff(&block, &hash_ret, password, ft_strlen(password), salt, salt_len) == 1)
 			return (NULL);
-		if ((buffs[TMP] = ft_memcat(buffs[RET], ret_len, buffs[HASH_RET], HASH_LEN)) == NULL)
+		erase_buff(&hash_ret);
+		if ((hash_ret.buff = hash_func(block.buff, block.buff_len)) == NULL)
+		{
+			print_errno("ft_ssl: Error during hash: ");
 			return (NULL);
-		free(buffs[HASH_RET]);
-		free(buffs[RET]);
-		buffs[RET] = buffs[TMP];
-		ret_len += HASH_LEN;
+		}
+		hash_ret.buff_len = hash_len;
+		erase_buff(&block);
+		if (concat_ret(&ret, &hash_ret) == 1)
+			return (NULL);
 	}
-	free(buffs[CONCAT]);
-	return (buffs[RET]);
+	erase_buff(&hash_ret);
+	return (ret.buff);
 }

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 20:13:17 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 01:13:27 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 20:30:56 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ uint8_t		*raw_sha256(uint8_t *str, size_t size)
 		i++;
 	}
 	return (ret);
+}
+
+size_t		sha256_get_ret_len(void)
+{
+	return (32);
 }

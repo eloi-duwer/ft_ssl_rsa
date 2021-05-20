@@ -6,13 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 18:02:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 20:30:38 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_des.h>
 #include <ft_ssl.h>
 #include <termios.h>
+#include <ft_ssl_hash.h>
 
 /*
 **	If decoding, salt is in the header of the file, or in argument,
@@ -53,7 +54,7 @@ void	get_key_iv(t_des_args *ctx)
 	salt = reverse_bits_u64(ctx->salt);
 	if (ctx->use_default_keygen)
 	{
-		if ((key_iv = openssl_kdf(ctx->password, \
+		if ((key_iv = openssl_kdf(raw_sha256, sha256_get_ret_len(), ctx->password, \
 		(uint8_t *)&salt, 8, 16)) == NULL)
 			exit(print_errno("Can't generate key: "));
 	}

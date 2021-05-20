@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 16:52:25 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 20:31:24 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ uint64_t		sha512_ch(uint64_t x, uint64_t y, uint64_t z);
 uint64_t		sha512_maj(uint64_t x, uint64_t y, uint64_t z);
 void			sha512_loop(t_sha512_ctx *ctx, int i);
 int				padding_sha512(t_sha512_ctx *ctx);
+size_t			md5_get_ret_len(void);
+size_t			sha256_get_ret_len(void);
 
 #endif

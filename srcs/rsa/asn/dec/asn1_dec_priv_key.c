@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 20:12:20 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 22:25:55 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ft_ssl_des.h>
 #include <ft_ssl_rsa.h>
 #include <ft_ssl_base64.h>
+#include <ft_ssl_hash.h>
 
 static int		asn1_priv_do_read_key(t_buff *buff, t_rsa_key *key)
 {
@@ -85,6 +86,34 @@ static void     empty_buffer_des(t_des_args *args)
 	(void)args;
 }
 
+static int		do_des_conf(t_des_args *des_conf, char *salt, char *pts[2])
+{
+	uint8_t	*key;
+
+	des_conf->salt = reverse_bits_u64(ft_char_to_hex_u64(salt));
+	des_conf->salt_str = NULL;
+	des_conf->no_salt = true;
+	des_conf->alg = cbc;
+	des_conf->decode = true;
+	des_conf->use_default_keygen = true;
+	des_conf->base64 = true;
+	des_conf->str_in = pts[0];
+	des_conf->strlen_in = pts[1] - pts[0];
+	des_conf->write_salt_func = write_salt_des;
+	des_conf->write_func = write_des;
+	des_conf->empty_buffer_func = empty_buffer_des;
+	if ((key = openssl_kdf(raw_md5, md5_get_ret_len(), des_conf->password, (uint8_t *)&des_conf->salt, 8, 8)) == NULL)
+		return (1);
+	free(des_conf->password);
+	des_conf->password = NULL;
+	des_conf->key = reverse_bits_u64(*(uint64_t *)key);
+	free(key);
+	des_conf->has_key = true;
+	des_conf->iv = reverse_bits_u64(des_conf->salt);
+	des_conf->has_iv = true;
+	return (0);
+}
+
 static int		asn1_dec_des_priv_key(char *pts[2], t_buff *buff, char *passin)
 {
 	char		salt[17];
@@ -99,19 +128,7 @@ static int		asn1_dec_des_priv_key(char *pts[2], t_buff *buff, char *passin)
 	ft_strncpy(salt, pts[0], 16);
 	salt[16] = '\0';
 	pts[0] += 18;
-	des_conf.salt_str = salt;
-	des_conf.has_salt = true;
-	des_conf.no_salt = true;
-	des_conf.alg = cbc;
-	des_conf.password_malloced = true;
-	des_conf.decode = true;
-	des_conf.use_default_keygen = true;
-	des_conf.base64 = true;
-	des_conf.str_in = pts[0];
-	des_conf.strlen_in = pts[1] - pts[0];
-	des_conf.write_salt_func = write_salt_des;
-	des_conf.write_func = write_des;
-	des_conf.empty_buffer_func = empty_buffer_des;
+	do_des_conf(&des_conf, salt, pts);
 	if (des_process(&des_conf) == 1)
 		return (1);
 	buff->buff = (uint8_t *)des_conf.str_out;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 17:48:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/14 18:08:20 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 14:05:45 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,41 @@ char	*get_pass_stdin(char *ask_phrase, bool verify_pass)
 	struct termios	new;
 	char			*pass;
 	char			*verify;
+	int				fd;
 
-	if (tcgetattr(0, &old) != 0)
+	if ((fd = open("/dev/tty", O_RDWR)) == -1)
+	{
+		print_errno("ft_ssl: Can't open /dev/tty: ");
+		return (NULL);
+	}
+	if (tcgetattr(fd, &old) != 0)
 		exit(print_errno("Can't get password: "));
 	ft_memcpy(&new, &old, sizeof(struct termios));
 	new.c_lflag &= ~ECHO;
-	if (tcsetattr(0, TCSAFLUSH, &new) != 0)
+	if (tcsetattr(fd, TCSAFLUSH, &new) != 0)
 		exit(print_errno("Can't get password: "));
-	ft_printf("%s: ", ask_phrase);
-	if (get_next_line(0, &pass) == -1)
+	ft_fdprintf(fd, "%s: ", ask_phrase);
+	if (get_next_line(fd, &pass) == -1)
 		exit(print_errno("Can't get password: "));
-	ft_printf("\n");
+	ft_fdprintf(fd, "\n");
 	if (verify_pass == true)
 	{
-		ft_printf("Verifying - %s: ", ask_phrase);
-		if (get_next_line(0, &verify) == -1)
+		ft_fdprintf(fd, "Verifying - %s: ", ask_phrase);
+		if (get_next_line(fd, &verify) == -1)
 			exit(print_errno("Can't get password: "));
-		ft_printf("\n");
+		ft_fdprintf(fd, "\n");
 		if (ft_strcmp(pass, verify) != 0)
 		{
 			ft_fdprintf(2, "Verify failure: The passwords don't match\n");
 			free(verify);
 			free(pass);
-			tcsetattr(0, TCSAFLUSH, &old);
+			tcsetattr(fd, TCSAFLUSH, &old);
 			return (NULL);
 		}
 		free(verify);
 	}
-	tcsetattr(0, TCSAFLUSH, &old);
+	tcsetattr(fd, TCSAFLUSH, &old);
+	close(fd);
 	return (pass);
 }
 

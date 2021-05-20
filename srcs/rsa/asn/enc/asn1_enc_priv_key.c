@@ -6,13 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 22:57:39 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 22:26:01 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_rsa.h>
 #include <ft_ssl_asn1.h>
 #include <ft_ssl_des.h>
+#include <ft_ssl_hash.h>
 
 static void write_des(t_des_args *ctx, uint64_t block)
 {
@@ -42,6 +43,33 @@ static void empty_buffer_des(t_des_args *ctx)
 	(void)ctx;
 }
 
+static int	do_des_conf(t_des_args *des_conf, char *pass, t_buff *buff)
+{
+	uint8_t	*key;
+
+	des_conf->salt = get_64b_rand(NULL);
+	des_conf->has_key = true;
+	des_conf->has_salt = true;
+	des_conf->password = get_pass(pass, 4, "Enter PEM pass phrase", true);
+	des_conf->str_in = (char *)buff->buff;
+	des_conf->strlen_in = buff->curr_len;
+	des_conf->alg = cbc;
+	des_conf->decode = false;
+	des_conf->base64 = false;
+	des_conf->write_func = write_des;
+	des_conf->write_salt_func = write_salt_des;
+	des_conf->empty_buffer_func = empty_buffer_des;
+	if ((key = openssl_kdf(raw_md5, md5_get_ret_len(), des_conf->password, (uint8_t *)&des_conf->salt, 8, 8)) == NULL)
+		return (1);
+	free(des_conf->password);
+	des_conf->password = NULL;
+	des_conf->key = reverse_bits_u64(*(uint64_t *)key);
+	free(key);
+	des_conf->iv =  reverse_bits_u64(des_conf->salt);
+	des_conf->has_iv = true;
+	return (0);
+}
+
 void	    asn1_encode_private_key(t_asn1_conf *conf, t_rsa_key *key, t_buff *buff)
 {
 	t_des_args	des_conf;
@@ -53,17 +81,7 @@ void	    asn1_encode_private_key(t_asn1_conf *conf, t_rsa_key *key, t_buff *buff
 	if (conf->des == true && conf->type == PEM)
 	{
 		ft_bzero(&des_conf, sizeof(des_conf));
-		des_conf.password = get_pass(conf->pass, 4, "Enter PEM pass phrase", true);
-		des_conf.password_malloced = true;
-		des_conf.str_in = (char *)buff->buff;
-		des_conf.strlen_in = buff->curr_len;
-		des_conf.use_default_keygen = true;
-		des_conf.alg = cbc;
-		des_conf.decode = false;
-		des_conf.base64 = false;
-		des_conf.write_func = write_des;
-		des_conf.write_salt_func = write_salt_des;
-		des_conf.empty_buffer_func = empty_buffer_des;
+		do_des_conf(&des_conf, conf->pass, buff);
 		if (des_process(&des_conf) == 1)
 			exit(print_error("Error during des encryption\n"));
 		erase_buff(buff);

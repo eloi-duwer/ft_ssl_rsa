@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 15:31:26 by eduwer            #+#    #+#             */
-/*   Updated: 2021/04/23 16:53:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/20 21:24:59 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ uint8_t		*raw_md5(uint8_t *str, size_t size)
 {
 	t_md5_ctx	ctx;
 	uint8_t		*ret;
-	uint32_t	tmp;
 
 	if ((ret = (uint8_t *)malloc(sizeof(uint8_t) * 16)) == NULL)
 		return (NULL);
 	if (md5(&ctx, (char *)str, size) == false)
 		return (NULL);
-	tmp = reverse_bits_u32(ctx.buffera);
-	ft_memcpy(ret, &tmp, 4);
-	tmp = reverse_bits_u32(ctx.bufferb);
-	ft_memcpy(&ret[4], &tmp, 4);
-	tmp = reverse_bits_u32(ctx.bufferc);
-	ft_memcpy(&ret[8], &tmp, 4);
-	tmp = reverse_bits_u32(ctx.bufferd);
-	ft_memcpy(&ret[12], &tmp, 4);
+	ft_memcpy(ret, &ctx.buffera, 4);
+	ft_memcpy(&ret[4], &ctx.bufferb, 4);
+	ft_memcpy(&ret[8], &ctx.bufferc, 4);
+	ft_memcpy(&ret[12], &ctx.bufferd, 4);
 	return (ret);
+}
+
+size_t		md5_get_ret_len(void)
+{
+	return (16);
 }

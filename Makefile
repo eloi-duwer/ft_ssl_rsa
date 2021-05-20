@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/05/15 18:53:25 by eduwer           ###   ########.fr        #
+#    Updated: 2021/05/20 19:01:04 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC_NAME = main.c \
 	helpers/gen_prime.c \
 	helpers/lcm_gcd.c \
 	helpers/get_pass.c \
+	helpers/buff.c \
 	hash/hash_parse_args.c \
 	hash/hash_process.c \
 	hash/md5/md5.c \
