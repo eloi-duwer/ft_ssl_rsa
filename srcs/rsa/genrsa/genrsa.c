@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:19:56 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/19 00:21:54 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/05/21 01:53:36 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ static void	genrsa_enc_print_key(t_rsa_key *key, int fd_out)
 	free(b64);
 }
 
+static uint64_t	get_different_prime(uint64_t n, t_rand_gen *rand)
+{
+	uint64_t	r;
+
+	while (true)
+	{
+		r = gen_prime(32, rand);
+		if (r != n)
+			return (r);
+		ft_fdprintf(2, "*");
+	}
+}
+
 static void	genrsa_gen_key(t_genrsa_args *args, t_rand_gen *rand)
 {
 	t_rsa_key	key;
@@ -38,7 +51,7 @@ static void	genrsa_gen_key(t_genrsa_args *args, t_rand_gen *rand)
 	key.publicExponent = 65537;
 	ft_fdprintf(2, "e is %lu (0x%x)\n", key.publicExponent, key.publicExponent);
 	key.prime1 = gen_prime(32, rand);
-	key.prime2 = gen_prime(32, rand);
+	key.prime2 = get_different_prime(key.prime1, rand);
 	key.modulus = key.prime1 * key.prime2;
 	tmp = lcm(key.prime1 - 1, key.prime2 - 1);
 	gcd_ext(key.publicExponent, tmp, &key.privateExponent, NULL);
