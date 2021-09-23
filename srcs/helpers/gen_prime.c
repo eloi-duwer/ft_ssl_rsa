@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:20:11 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/21 01:53:03 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:29:15 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ uint64_t	gen_prime(ssize_t size, t_rand_gen *r)
 
 	ret = get_rand_size(r, size);
 	ft_fdprintf(2, ".");
-	while (!is_prime(ret, 34, r))
+	while (!is_prime(ret, 34, r, true))
 	{
 		ret = get_rand_size(r, size);
 		ft_fdprintf(2, ".");

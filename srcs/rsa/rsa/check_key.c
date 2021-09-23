@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 17:23:47 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/03 17:43:28 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:29:25 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void		check_key(t_rsa_args *args, t_rsa_key *key)
 	err = 0;
 	init_rand(&r, NULL);
 	//prime1 prime
-	err |= check_value(args, is_prime(key->prime1, 42, &r), 1, "p not prime");
+	err |= check_value(args, is_prime(key->prime1, 42, &r, false), 1, "p not prime");
 	//prime2 prime
-	err |= check_value(args, is_prime(key->prime2, 42, &r), 1, "q not prime");
+	err |= check_value(args, is_prime(key->prime2, 42, &r, false), 1, "q not prime");
 	//modulus = prime1 * prime2
 	err |= check_value(args, key->modulus, key->prime1 * key->prime2, "n does not equal p q");
 	//the public exponent is not one or even

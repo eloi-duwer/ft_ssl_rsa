@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 18:11:11 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 17:59:40 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:28:19 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	print_rsautl_usage(void)
 \n  -in file\tInput file\
 \n  -out file\tOutput file\
 \n  -inkey key\tInput key file\
-\n  -pubin\t\tInput key is an RSA public key\
-\n  -encrypt\t\tEncrypt with public key (default)\
-\n  -decrypt\t\tDecrypt with private key\
-\n  -hexdump\t\tHex dump output");
+\n  -pubin\tInput key is an RSA public key\
+\n  -encrypt\tEncrypt with public key (default)\
+\n  -decrypt\tDecrypt with private key\
+\n  -hexdump\tHex dump output\n");
 	return (1);
 }
 

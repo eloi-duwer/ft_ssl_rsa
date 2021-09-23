@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 02:43:25 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/21 01:46:14 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:32:30 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static bool	miller_rabin(uint64_t nb, uint64_t d, t_rand_gen *r)
 	return (false);
 }
 
-bool		is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r)
+bool		is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r, \
+				bool print_progress)
 {
 	uint64_t	d;
 
@@ -52,7 +53,8 @@ bool		is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r)
 		if (miller_rabin(nb, d, r) == 0)
 			return (false);
 		iter--;
-		ft_fdprintf(2, "+");
+		if (print_progress)
+			ft_fdprintf(2, "+");
 	}
 	return (true);
 }

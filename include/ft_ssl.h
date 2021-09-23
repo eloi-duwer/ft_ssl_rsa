@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/20 19:00:44 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:29:07 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			xor_array(void *inout, void *b, size_t size);
 int				hash_arg_parsing(int ac, char **av);
 int				base64_arg_parsing(int ac, char **av);
 int				des_args_parsing(int ac, char **av);
-bool			is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r);
+bool			is_prime(const uint64_t nb, uint64_t iter, t_rand_gen *r, bool print_progress);
 void			init_rand(t_rand_gen *r, char *filename);
 void			destroy_rand(t_rand_gen *r);
 void			get_rand(t_rand_gen *r, void *buff, ssize_t size);

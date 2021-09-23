@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 13:39:15 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 16:19:45 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/09/23 21:32:08 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ uint64_t	asn1_read_integer(t_buff *buff)
 	size = asn1_read_size(buff);
 	tmp = asn1_read_byte(buff);
 	if (size >= 10 || (size == 9 && tmp != 0))
-		exit(print_error("ASN.1: Can't read integers larger than 68 bits"));
+		exit(print_error("ASN.1: Can't read integers larger than 64 bits"));
 	ret = tmp;
 	size--;
 	while (size > 0)
