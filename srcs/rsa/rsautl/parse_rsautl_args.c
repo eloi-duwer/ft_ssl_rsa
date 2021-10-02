@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 18:05:33 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 18:02:21 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/10/02 19:05:03 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int rsautl_parse_subargs(t_rsautl_args *args, t_ac_av *a)
     return (0);
 }
 
-int parse_rsault_args(int ac, char **av)
+int parse_rsautl_args(int ac, char **av)
 {
     t_rsautl_args   args;
     t_ac_av      a;

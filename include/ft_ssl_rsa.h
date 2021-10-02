@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 23:40:18 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/16 17:45:52 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/10/02 19:04:49 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static const char	*g_public_footer = "-----END PUBLIC KEY-----\n";
 
 int					parse_genrsa_args(int ac, char **av);
 int					parse_rsa_args(int ac, char **av);
-int					parse_rsault_args(int ac, char **av);
+int					parse_rsautl_args(int ac, char **av);
 int					print_genrsa_usage(void);
 int					print_rsa_usage(void);
 int					print_rsautl_usage(void);

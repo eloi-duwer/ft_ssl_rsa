@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/06/10 18:31:12 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/10/02 19:04:44 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			print_commands(char *name)
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", name);
 	else
 		ft_printf("Usage: ./ft_ssl <command>\n\n");
-	ft_printf("Standart commands:\ngenrsa\nrsa\nrsault\n\n");
+	ft_printf("Standart commands:\ngenrsa\nrsa\nrsautl\n\n");
 	ft_printf("Message Digest commands:\nmd5\nsha256\nsha384\nsha512\n\n");
 	ft_printf("Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb\n");
 	return (1);

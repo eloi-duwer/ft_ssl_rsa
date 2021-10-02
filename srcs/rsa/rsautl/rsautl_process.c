@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 18:26:30 by eduwer            #+#    #+#             */
-/*   Updated: 2021/05/19 19:49:39 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/10/02 19:03:47 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		hexdump_data(int fd, uint64_t msg)
 {
-	char	dump[8];
+	unsigned char	dump[8];
 	int		i;
 
 	i = 0;
@@ -22,7 +22,7 @@ static int		hexdump_data(int fd, uint64_t msg)
 	while (i < 8)
 	{
 		dump[i] = msg & 0xFF;
-		ft_fdprintf(fd, " %.02x", (unsigned int)dump[i]);
+		ft_fdprintf(fd, " %.02x", dump[i]);
 		msg >>= 8;
 		i++;
 	}
